@@ -1,7 +1,17 @@
 ---
 title: "COMP2300 Assignment Design Document"
-author: 
-email: 
+author: John (Min Jae), Kim
+email: johnmjkim1216@gmail.com
 ---
 
-<!-- write your design document here -->
+# What : Pet
+
+word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word
+
+# How : Pet
+
+word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word
+
+# Why : Pet
+
+word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word
