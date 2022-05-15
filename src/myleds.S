@@ -1,5 +1,5 @@
 .syntax unified
-@ Simple tamagochi library
+@ Simple myleds library
 @ NOTE: This module depends on led.S
 
 @ --------------------- Module Interface --------------------
