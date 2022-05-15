@@ -14,6 +14,6 @@ main:
 loop:
   nop
   push {lr}
-  bl display_exit_option
+  bl display_feed_pet_option
   pop {lr}
   b loop

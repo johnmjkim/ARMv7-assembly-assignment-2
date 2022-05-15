@@ -1,59 +1,59 @@
 .syntax unified
 @ Simple menuselect library
 @ NOTE: This module depends on led.S
-.global display_see_pet, display_pet_status, display_telepathy_game, display_feed_pet, display_exit_option
+.global display_see_pet_option, display_pet_status_option, display_telepathy_game_option, display_feed_pet_option, display_exit_option
 
 @ --------------------- Implementation --------------------
-.type display_see_pet, %function
+.type display_see_pet_option, %function
 @ see pet
 @ --parameters--
 @ none
-display_see_pet:
+display_see_pet_option:
   push {r0, lr}
   mov r0, 0
   bl display_menu
   pop {r0, lr}
   bx lr
-.size display_see_pet, .-display_see_pet
+.size display_see_pet_option, .-display_see_pet_option
 
 @ --------------------- Implementation --------------------
-.type display_pet_status, %function
+.type display_pet_status_option, %function
 @ pet status
 @ --parameters--
 @ none
-display_pet_status:
+display_pet_status_option:
   push {r0, lr}
   mov r0, 1
   bl display_menu
   pop {r0, lr}
   bx lr
-.size display_pet_status, .-display_pet_status
+.size display_pet_status_option, .-display_pet_status_option
 
 @ --------------------- Implementation --------------------
-.type display_telepathy_game, %function
+.type display_telepathy_game_option, %function
 @ telepathy game
 @ --parameters--
 @ none
-display_telepathy_game:
+display_telepathy_game_option:
   push {r0, lr}
   mov r0, 2
   bl display_menu
   pop {r0, lr}
   bx lr
-.size display_telepathy_game, .-display_telepathy_game
+.size display_telepathy_game_option, .-display_telepathy_game_option
 
 @ --------------------- Implementation --------------------
-.type display_feed_pet, %function
+.type display_feed_pet_option, %function
 @ feed pet
 @ --parameters--
 @ none
-display_feed_pet:
+display_feed_pet_option:
   push {r0, lr}
   mov r0, 3
   bl display_menu
   pop {r0, lr}
   bx lr
-.size display_feed_pet, .-display_feed_pet
+.size display_feed_pet_option, .-display_feed_pet_option
 
 @ --------------------- Implementation --------------------
 .type display_exit_option, %function
