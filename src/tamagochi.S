@@ -10,46 +10,57 @@
 @ .global init_leds, write_row_pin, write_column_pin, write_led_pin, 
 @ .global write_led, write_pins, write_row_pins, write_column_pins, 
 @ .global read_led, read_pins, read_row, read_column,
- 
+
 @ --------------------- Implementation --------------------
 .type display_happy_face, %function
 @ dd
 @ --parameters--
 @ none
 display_happy_face:
-  push {r0-r4}
-  ldr r2, =eye
-  mov r3, 0
-  mov r4, 4
-display_happy_face_eye_loop:
-  cmp r3, r4
-  beq display_happy_face_end
-
-  ldr r0, [r2, r3, lsl 2]
-  add r3, 1
-  ldr r1, [r2, r3, lsl 2]
-  add r3, 1
-
-  push {r2, r3, lr}
-  bl led_blink
-  pop {r2, r3, lr}
-
-  b display_happy_face_eye_loop
-display_happy_face_end:
-  pop {r0-r4}
+  push {r0, r1, lr}
+  mov r0, 0
+  mov r1, 0
+  bl display_face
+  pop {r0, r1, lr}
   bx lr
 .size display_happy_face, .-display_happy_face
 
 @ --------------------- Implementation --------------------
+.type display_face, %function
+@ r0 : eye index 0 (open), 1 (closed)
+@ r1 : mouth index 0 (smile), 1 (neutral), 2 (upset)
+@ --parameters--
+@ none
+display_face:
+  push {lr}
+  bl display_eye
+  pop {lr}
+  push {lr}
+  bl display_mouth
+  pop {lr}
+  bx lr
+.size display_face, .-display_face
+
+@ --------------------- Implementation --------------------
 .type display_eye, %function
-@ dd
+@ r0 : eye index 0 (open), 1 (closed)
 @ --parameters--
 @ none
 display_eye:
-  push {r0-r4}
+  push {r1-r5}
   ldr r2, =eye
   mov r3, 0
-  mov r4, 4
+  mov r5, 4
+display_eye_type_loop:
+  ldr r4, [r2]
+  add r2, r5
+  cmp r3, r0
+  beq display_eye_loop_setup
+  mla r2, r4, r5, r2
+  add r3, 1
+  b display_eye_type_loop
+display_eye_loop_setup:
+  mov r3, 0
 display_eye_loop:
   cmp r3, r4
   beq display_eye_end
@@ -65,9 +76,48 @@ display_eye_loop:
 
   b display_eye_loop
 display_eye_end:
-  pop {r0-r4}
+  pop {r1-r5}
   bx lr
-.size display_happy_face, .-display_happy_face
+.size display_eye, .-display_eye
+
+@ --------------------- Implementation --------------------
+.type display_mouth, %function
+@ r1 : mouth index 0 (smile), 1 (neutral), 2 (upset)
+@ --parameters--
+@ none
+display_mouth:
+  push {r0, r2-r5}
+  ldr r2, =mouth
+  mov r3, 0
+  mov r5, 4
+display_mouth_type_loop:
+  ldr r4, [r2]
+  add r2, r5
+  cmp r3, r1
+  beq display_mouth_loop_setup
+  mla r2, r4, r5, r2
+  add r3, 1
+  b display_mouth_type_loop
+display_mouth_loop_setup:
+  mov r3, 0
+display_mouth_loop:
+  cmp r3, r4
+  beq display_mouth_end
+
+  ldr r0, [r2, r3, lsl 2]
+  add r3, 1
+  ldr r1, [r2, r3, lsl 2]
+  add r3, 1
+
+  push {r2, r3, lr}
+  bl led_blink
+  pop {r2, r3, lr}
+
+  b display_mouth_loop
+display_mouth_end:
+  pop {r0, r2-r5}
+  bx lr
+.size display_mouth, .-display_mouth
 
 .type led_blink, %function
 @ --parameters--
@@ -138,5 +188,15 @@ led_off:
 
 .data
 eye:
-@ happy:
-.word 1, 1, 1, 3
+@ open_eye
+.word 4, 1, 1, 1, 3
+@ closed_eye
+.word 8, 1, 0, 0, 1, 0, 3, 1, 4
+mouth:
+@ smile
+.word 10, 3, 0, 4, 1, 4, 2, 4, 3, 3, 4
+@ neutral
+.word 6, 3, 1, 3, 2, 3, 3
+@ upset
+.word 10, 4, 0, 3, 1, 3, 2, 3, 3, 4, 4
+
