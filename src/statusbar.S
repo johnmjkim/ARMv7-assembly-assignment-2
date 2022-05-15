@@ -6,7 +6,7 @@
 @ --------------------- Implementation --------------------
 .type display_upper_status_bar, %function
 @ r0 index 0 (upper), 1 (under)
-@ r1 
+@ r1 score (0~5)
 @ --parameters--
 @ none
 display_upper_status_bar:
@@ -20,6 +20,7 @@ display_upper_status_bar:
 @ --------------------- Implementation --------------------
 .type display_under_status_bar, %function
 @ r0 index 0 (upper), 1 (under)
+@ r1 score (0~5)
 @ --parameters--
 @ none
 display_under_status_bar:
@@ -32,13 +33,12 @@ display_under_status_bar:
 
 @ --------------------- Implementation --------------------
 .type display_status_bar, %function
-@ r0 : menu 
-@ 0 (upper), 
-@ 1 (under),
+@ r0 : menu index 0 (upper), 1 (under),
+@ r1 : score (0~5)
 @ --parameters--
 @ none
 display_status_bar:
-  push {r1-r5}
+  push {r2-r5}
   ldr r2, =status_bar
   mov r3, 0
   mov r5, 4
@@ -52,6 +52,9 @@ display_status_bar_type_loop:
   b display_status_bar_type_loop
 display_status_bar_loop_setup:
   mov r3, 0
+  mov r5, 2
+  mul r4, r1, r5
+  push {r0-r1}
 display_status_bar_loop:
   cmp r3, r4
   beq display_status_bar_end
@@ -67,7 +70,8 @@ display_status_bar_loop:
 
   b display_status_bar_loop
 display_status_bar_end:
-  pop {r1-r5}
+  pop {r0-r1}
+  pop {r2-r5}
   bx lr
 .size display_status_bar, .-display_status_bar
 
