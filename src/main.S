@@ -7,6 +7,12 @@ main:
   push {lr}
   bl init_leds
   pop {lr}
+  ldr r0, =hp
+  mov r1, 4
+  str r1, [r0]
+  ldr r0, =stress
+  mov r1, 2
+  str r1, [r0]
   b loop
 .size main, .-main
 

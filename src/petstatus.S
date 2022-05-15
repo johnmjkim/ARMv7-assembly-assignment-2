@@ -65,14 +65,15 @@ display_pet_status_background_end:
   bx lr
 .size display_pet_status_background, .-display_pet_status_background
 
+.global hp, stress, food_stock
 .data
 pet_status_background:
 @ pet status background
 .word 10, 1, 2, 2, 1, 2, 2, 2, 3, 3, 2
 hp:
-.word 3, 0, 5
+.word 5, 0, 5
 stress:
-.word 3, 0, 5
+.word 0, 0, 5
 food_stock:
 .word 0, 0, 5
 
