@@ -4,11 +4,15 @@
 .type main, %function
 main:
   nop
-  ldr r0, =hello
-
-  b main
+  push {lr}
+  bl init_leds
+  pop {lr}
+  b loop
 .size main, .-main
 
-.data
-hello:
-.word 0x424242
+loop:
+  nop
+  push {lr}
+  bl display_happy_face
+  pop {lr}
+  b loop
