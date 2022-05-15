@@ -13,6 +13,6 @@ main:
 loop:
   nop
   push {lr}
-  bl display_sad_thinking_face
+  bl display_sad_sleep_face
   pop {lr}
   b loop

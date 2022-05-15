@@ -7,7 +7,7 @@
 @ as global - this is the public API of the library
 @ Function exports:
 .global display_happy_face, display_neutral_face, display_sad_face
-.global display_happy_thinking_face, display_sleep_face, display_sad_thinking_face
+.global display_happy_sleep_face, display_neutral_sleep_face, display_sad_sleep_face
 @ .global init_leds, write_row_pin, write_column_pin, write_led_pin, 
 @ .global write_led, write_pins, write_row_pins, write_column_pins, 
 @ .global read_led, read_pins, read_row, read_column,
@@ -55,46 +55,46 @@ display_sad_face:
 .size display_sad_face, .-display_sad_face
 
 @ --------------------- Implementation --------------------
-.type display_happy_thinking_face, %function
+.type display_happy_sleep_face, %function
 @ eye (closed), mouth (smile)
 @ --parameters--
 @ none
-display_happy_thinking_face:
+display_happy_sleep_face:
   push {r0, r1, lr}
   mov r0, 1
   mov r1, 0
   bl display_face
   pop {r0, r1, lr}
   bx lr
-.size display_happy_thinking_face, .-display_happy_thinking_face
+.size display_happy_sleep_face, .-display_happy_sleep_face
 
 @ --------------------- Implementation --------------------
-.type display_sleep_face, %function
+.type display_neutrl_sleep_face, %function
 @ eye (closed), mouth (neutral)
 @ --parameters--
 @ none
-display_sleep_face:
+display_neutral_sleep_face:
   push {r0, r1, lr}
   mov r0, 1
   mov r1, 1
   bl display_face
   pop {r0, r1, lr}
   bx lr
-.size display_sleep_face, .-display_sleep_face
+.size display_neutral_sleep_face, .-display_neutral_sleep_face
 
 @ --------------------- Implementation --------------------
-.type display_sad_thinking_face, %function
+.type display_sad_sleep_face, %function
 @ eye (closed), mouth (upset)
 @ --parameters--
 @ none
-display_sad_thinking_face:
+display_sad_sleep_face:
   push {r0, r1, lr}
   mov r0, 1
   mov r1, 2
   bl display_face
   pop {r0, r1, lr}
   bx lr
-.size display_sad_thinking_face, .-display_sad_thinking_face
+.size display_sad_sleep_face, .-display_sad_sleep_face
 
 @ --------------------- Implementation --------------------
 .type display_face, %function
