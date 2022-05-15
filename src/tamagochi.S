@@ -129,6 +129,7 @@ display_eye_type_loop:
   b display_eye_type_loop
 display_eye_loop_setup:
   mov r3, 0
+  push {r0}
 display_eye_loop:
   cmp r3, r4
   beq display_eye_end
@@ -144,6 +145,7 @@ display_eye_loop:
 
   b display_eye_loop
 display_eye_end:
+  pop {r0}
   pop {r1-r5}
   bx lr
 .size display_eye, .-display_eye

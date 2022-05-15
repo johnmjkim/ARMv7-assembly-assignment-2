@@ -93,6 +93,7 @@ display_menu_type_loop:
   b display_menu_type_loop
 display_menu_loop_setup:
   mov r3, 0
+  push {r0}
 display_menu_loop:
   cmp r3, r4
   beq display_menu_end
@@ -108,6 +109,7 @@ display_menu_loop:
 
   b display_menu_loop
 display_menu_end:
+  pop {r0}
   pop {r1-r5}
   bx lr
 .size display_menu, .-display_menu

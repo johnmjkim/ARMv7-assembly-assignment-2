@@ -7,14 +7,13 @@ main:
   push {lr}
   bl init_leds
   pop {lr}
-  mov r1, 3
   b loop
 .size main, .-main
 
 loop:
   nop
   push {lr}
-  bl display_upper_status_bar
+  bl display_sad_sleep_face
   pop {lr}
   b loop
 
