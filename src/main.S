@@ -17,3 +17,15 @@ loop:
   bl display_feed_pet_option
   pop {lr}
   b loop
+
+.data
+hp:
+.word 5, 0, 5
+stress:
+.word 0, 0, 5
+food_stock:
+.word 0, 0, 5
+game_round:
+.word 0, 0, 5
+correct_motion:
+.word 0, 0, 5
