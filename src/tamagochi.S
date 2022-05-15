@@ -6,14 +6,15 @@
 @ declare all labels corresponding to functions designed to be called from elsewhere
 @ as global - this is the public API of the library
 @ Function exports:
-.global display_happy_face
+.global display_happy_face, display_neutral_face, display_sad_face
+.global display_happy_thinking_face, display_sleep_face, display_sad_thinking_face
 @ .global init_leds, write_row_pin, write_column_pin, write_led_pin, 
 @ .global write_led, write_pins, write_row_pins, write_column_pins, 
 @ .global read_led, read_pins, read_row, read_column,
 
 @ --------------------- Implementation --------------------
 .type display_happy_face, %function
-@ dd
+@ eye (open), mouth (smile)
 @ --parameters--
 @ none
 display_happy_face:
@@ -24,6 +25,76 @@ display_happy_face:
   pop {r0, r1, lr}
   bx lr
 .size display_happy_face, .-display_happy_face
+
+@ --------------------- Implementation --------------------
+.type display_neutral_face, %function
+@ eye (open), mouth (neutral)
+@ --parameters--
+@ none
+display_neutral_face:
+  push {r0, r1, lr}
+  mov r0, 0
+  mov r1, 1
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_neutral_face, .-display_neutral_face
+
+@ --------------------- Implementation --------------------
+.type display_sad_face, %function
+@ eye (open), mouth (upset)
+@ --parameters--
+@ none
+display_sad_face:
+  push {r0, r1, lr}
+  mov r0, 0
+  mov r1, 2
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_sad_face, .-display_sad_face
+
+@ --------------------- Implementation --------------------
+.type display_happy_thinking_face, %function
+@ eye (closed), mouth (smile)
+@ --parameters--
+@ none
+display_happy_thinking_face:
+  push {r0, r1, lr}
+  mov r0, 1
+  mov r1, 0
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_happy_thinking_face, .-display_happy_thinking_face
+
+@ --------------------- Implementation --------------------
+.type display_sleep_face, %function
+@ eye (closed), mouth (neutral)
+@ --parameters--
+@ none
+display_sleep_face:
+  push {r0, r1, lr}
+  mov r0, 1
+  mov r1, 1
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_sleep_face, .-display_sleep_face
+
+@ --------------------- Implementation --------------------
+.type display_sad_thinking_face, %function
+@ eye (closed), mouth (upset)
+@ --parameters--
+@ none
+display_sad_thinking_face:
+  push {r0, r1, lr}
+  mov r0, 1
+  mov r1, 2
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_sad_thinking_face, .-display_sad_thinking_face
 
 @ --------------------- Implementation --------------------
 .type display_face, %function
@@ -191,7 +262,7 @@ eye:
 @ open_eye
 .word 4, 1, 1, 1, 3
 @ closed_eye
-.word 8, 1, 0, 0, 1, 0, 3, 1, 4
+.word 8, 1, 0, 1, 1, 1, 3, 1, 4
 mouth:
 @ smile
 .word 10, 3, 0, 4, 1, 4, 2, 4, 3, 3, 4
