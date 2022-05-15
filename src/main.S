@@ -13,17 +13,11 @@ main:
 loop:
   nop
   push {lr}
-  bl display_sad_sleep_face
+  bl display_pet_status
   pop {lr}
   b loop
 
 .data
-hp:
-.word 5, 0, 5
-stress:
-.word 0, 0, 5
-food_stock:
-.word 0, 0, 5
 game_round:
 .word 0, 0, 5
 correct_motion:
