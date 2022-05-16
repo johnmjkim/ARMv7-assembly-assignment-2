@@ -2,6 +2,7 @@
 @ Simple petstatus library
 @ NOTE: This module depends on led.S
 .global display_pet_status, change_pet_status
+.global increase_HP, increase_stress, decrease_HP, decrease_stress
 
 @ --------------------- Implementation --------------------
 .type display_pet_status, %function
@@ -119,7 +120,7 @@ increase_stress:
 .size increase_stress, .-increase_stress
 
 .type decrease_HP, %function
-@ r0 : increment
+@ r0 : decrement
 decrease_HP:
   push {r1-r2}
   push {r0}
@@ -138,7 +139,7 @@ decrease_HP:
 .size decrease_HP, .-decrease_HP
 
 .type decrease_stress, %function
-@ r0 : increment
+@ r0 : decrement
 decrease_stress:
   push {r1-r2}
   push {r0}

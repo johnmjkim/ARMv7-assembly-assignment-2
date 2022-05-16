@@ -154,9 +154,5 @@ current_state:
 previous_state:
 @ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet)
 .word 0, 0, 3
-button_A_exit:
-.word 1, 1, 0, 1, 1
-button_B_enabled:
-.word 0, 0, 1, 1, 1
 
 

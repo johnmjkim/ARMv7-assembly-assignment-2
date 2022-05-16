@@ -130,13 +130,27 @@ button_A_clicked:
   beq button_A_clicked_state4
 
 button_A_clicked_state0:
+  ldr r0, =current_state
+  ldr r1, [r0, 8]
+  str r1, [r0]
   b button_A_clicked_end
+
 button_A_clicked_state1:
+  ldr r0, =current_state
+  ldr r1, [r0, 8]
+  str r1, [r0]
   b button_A_clicked_end
+
 button_A_clicked_state2:
+
   b button_A_clicked_end
+
 button_A_clicked_state3:
+  ldr r0, =current_state
+  ldr r1, [r0, 8]
+  str r1, [r0]
   b button_A_clicked_end
+
 button_A_clicked_state4:
   ldr r0, =current_menu_display
   ldr r1, [r0]
@@ -149,9 +163,7 @@ button_A_clicked_state4:
   ldr r1, [r0, 4]
   str r1, [r0]
   b button_A_clicked_end
-  @ mov r0, 2
-  @ mov r1, 0
-  @ bl led_blink_50ms
+
 button_A_clicked_end:
   pop {r0-r4, lr}
   bx lr
@@ -159,11 +171,33 @@ button_A_clicked_end:
 
 .type button_B_clicked, %function
 button_B_clicked:
-  push {r0, r1, lr}
+  push {r0-r4, lr}
+  ldr r0, =current_state
+  ldr r1, [r0]
+  cmp r1, 2
+  IT EQ
+  beq button_B_clicked_state2
+  cmp r1, 3
+  IT EQ
+  beq button_B_clicked_state3
+  cmp r1, 4
+  IT EQ
+  beq button_B_clicked_state4
+  b button_B_clicked_end
+
+button_B_clicked_state2:
+
+  b button_B_clicked_end
+
+button_B_clicked_state3:
+  bl feed_pet
+  b button_B_clicked_end
+
+button_B_clicked_state4:
   bl display_scroll
-  @ mov r0, 2
-  @ mov r1, 4
-  @ bl led_blink_50ms
-  pop {r0, r1, lr}
+  b button_B_clicked_end
+
+button_B_clicked_end:
+  pop {r0-r4, lr}
   bx lr
 .size button_B_clicked, .-button_B_clicked
