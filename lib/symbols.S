@@ -185,7 +185,14 @@
 .set OFS_GPIO_DIR,      0x514
 .set OFS_GPIO_DIRSET,   0x518
 .set OFS_GPIO_DIRCLR,   0x51C
-
+@ PIN_CNF
+.global OFS_GPIO_PIN_CONF4
+.set OFS_GPIO_PIN_CONF0, 0x700
+.set OFS_GPIO_PIN_CONF1, 0x704
+.set OFS_GPIO_PIN_CONF2, 0x708
+.set OFS_GPIO_PIN_CONF3, 0x70C
+.set OFS_GPIO_PIN_CONF4, 0x710
+.set OFS_GPIO_PIN_CONF5, 0x714
 
 @ ---------- GPIO Tasks and Events ---------- @
 
