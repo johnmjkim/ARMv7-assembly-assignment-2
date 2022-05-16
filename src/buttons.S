@@ -113,14 +113,46 @@ button_A_clicked:
   push {r0-r4, lr}
   ldr r0, =current_state
   ldr r1, [r0]
+  cmp r1, 0
+  IT EQ
+  beq button_A_clicked_state0
+  cmp r1, 1
+  IT EQ
+  beq button_A_clicked_state1
+  cmp r1, 2
+  IT EQ
+  beq button_A_clicked_state2
+  cmp r1, 3
+  IT EQ
+  beq button_A_clicked_state3
+  cmp r1, 4
+  IT EQ
+  beq button_A_clicked_state4
+
+button_A_clicked_state0:
+  b button_A_clicked_end
+button_A_clicked_state1:
+  b button_A_clicked_end
+button_A_clicked_state2:
+  b button_A_clicked_end
+button_A_clicked_state3:
+  b button_A_clicked_end
+button_A_clicked_state4:
   ldr r0, =current_menu_display
   ldr r1, [r0]
+  cmp r1, 4
+  IT EQ
+  moveq r1, 0
   ldr r0, =current_state
   str r1, [r0]
-
+  ldr r0, =current_menu_display
+  ldr r1, [r0, 4]
+  str r1, [r0]
+  b button_A_clicked_end
   @ mov r0, 2
   @ mov r1, 0
   @ bl led_blink_50ms
+button_A_clicked_end:
   pop {r0-r4, lr}
   bx lr
 .size button_A_clicked, .-button_A_clicked
