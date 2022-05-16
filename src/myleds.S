@@ -6,7 +6,30 @@
 @ declare all labels corresponding to functions designed to be called from elsewhere
 @ as global - this is the public API of the library
 @ Function exports:
-.global led_blink, led_on, led_off
+.global led_blink_50ms, led_blink, led_on, led_off
+
+.type led_blink_50ms, %function
+@ --parameters--
+@ r0: row index (0-4 with 0 being the top row)
+@ r1: column index (0-4 with 0 being the left most column)
+@ --return--
+@ none
+led_blink_50ms:
+  push {lr}
+  bl led_on
+  pop {lr}
+
+  ldr r0, =DELAY_50MS
+  push {lr}
+  bl delay
+  pop {lr}
+
+  push {lr}
+  bl led_off
+  pop {lr}
+
+  bx lr
+.size led_blink_50ms, .-led_blink_50ms
 
 .type led_blink, %function
 @ --parameters--
@@ -74,3 +97,5 @@ led_off:
 
   bx lr
 .size led_off, .-led_off
+
+.set DELAY_50MS,     3200000
