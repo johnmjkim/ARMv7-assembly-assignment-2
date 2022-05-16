@@ -16,11 +16,28 @@
 @ --parameters--
 @ none
 display_see_pet:
-  push {r0, r1, lr}
+  push {r0-r3, lr}
+  ldr r0, =stress
+  ldr r2, [r0]
+  ldr r3, [r0, 8]
+  cmp r2, r3
+  beq display_sad_pet
+display_not_sad_pet:
+  ldr r0, =hp
+  ldr r2, [r0]
+  cmp r2, 2
+  IT GT
+  movgt r1, 0
+  cmp r2, 2
+  IT LE
+  movle r1, 1
+  b display_see_pet_end
+display_sad_pet:
+  mov r1, 2
+display_see_pet_end:
   mov r0, 0
-  mov r1, 0
   bl display_face
-  pop {r0, r1, lr}
+  pop {r0-r3, lr}
   bx lr
 .size display_see_pet, .-display_see_pet
 
