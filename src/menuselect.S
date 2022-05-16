@@ -151,8 +151,5 @@ current_menu_display:
 current_state:
 @ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (menu display)
 .word 4, 0, 4
-previous_state:
-@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet)
-.word 0, 0, 3
 
 

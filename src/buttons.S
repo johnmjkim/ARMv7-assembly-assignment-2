@@ -70,9 +70,16 @@ GPIOTE_IRQHandler:
   IT EQ
   beq GPIOTE_IRQHandler_B
 
+@ execute program by button A
 GPIOTE_IRQHandler_A:
   push {lr}
   bl button_A_clicked
+  pop {lr}
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
   pop {lr}
 
   @ clear event for button A
@@ -84,9 +91,16 @@ GPIOTE_IRQHandler_A:
 
   b GPIOTE_IRQHandler_end
 
+@ execute program by button B
 GPIOTE_IRQHandler_B:
   push {lr}
   bl button_B_clicked
+  pop {lr}
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
   pop {lr}
 
   @ clear event for button B
@@ -100,7 +114,8 @@ GPIOTE_IRQHandler_B:
 
 GPIOTE_IRQHandler_end:
 
-  ldr r0, =0x10
+  @ give delay for clear event
+  ldr r0, =0x100
   push {lr}
   bl delay
   pop {lr}
@@ -129,28 +144,40 @@ button_A_clicked:
   IT EQ
   beq button_A_clicked_state4
 
+@ button A clicked at state 0 : see pet
+@ go back to menu display
 button_A_clicked_state0:
   ldr r0, =current_state
   ldr r1, [r0, 8]
   str r1, [r0]
   b button_A_clicked_end
 
+@ button A clicked at state 1 : pet status
+@ go back to menu display
 button_A_clicked_state1:
   ldr r0, =current_state
   ldr r1, [r0, 8]
   str r1, [r0]
   b button_A_clicked_end
 
+@ button A clicked at state 2 : telepathy game
+@ select pet to move left
 button_A_clicked_state2:
-
+  push {lr}
+  bl pet_position_left
+  pop {lr}
   b button_A_clicked_end
 
+@ button A clicked at state 3 : feed pet
+@ go back to menu display
 button_A_clicked_state3:
   ldr r0, =current_state
   ldr r1, [r0, 8]
   str r1, [r0]
   b button_A_clicked_end
 
+@ button A clicked at state 4 : menu display
+@ move to selected option
 button_A_clicked_state4:
   ldr r0, =current_menu_display
   ldr r1, [r0]
@@ -185,14 +212,22 @@ button_B_clicked:
   beq button_B_clicked_state4
   b button_B_clicked_end
 
+@ button B clicked at state 2 : telepathy game
+@ select pet to move right
 button_B_clicked_state2:
-
+  push {lr}
+  bl pet_position_right
+  pop {lr}
   b button_B_clicked_end
 
+@ button B clicked at state 3 : feed pet
+@ feed my pet, increase HP by 1
 button_B_clicked_state3:
   bl feed_pet
   b button_B_clicked_end
 
+@ button B clicked at state 4 : menu display
+@ scroll to the next option
 button_B_clicked_state4:
   bl display_scroll
   b button_B_clicked_end

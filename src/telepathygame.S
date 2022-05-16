@@ -10,6 +10,46 @@
 @ --parameters--
 @ none
 display_telepathy_game:
+  push {r0-r4}
+
+  ldr r0, =pet_position
+  ldr r1, [r0]
+  mov r2, r1
+  mov r0, 2
+  push {r2, lr}
+  bl led_blink
+  pop {r2, lr}
+
+  cmp r2, 0
+  IT EQ
+  beq display_telepathy_game_left
+  cmp r2, 4
+  IT EQ
+  beq display_telepathy_game_right
+  cmp r2, 2
+  IT EQ
+  beq display_telepathy_game_status
+
+display_telepathy_game_left:
+  mov r0, 2
+  mov r1, r2
+  push {r2, lr}
+  bl led_blink_50ms
+  pop {r2, lr}
+  b display_telepathy_game_status
+
+display_telepathy_game_right:
+  mov r0, 2
+  mov r1, r2
+  push {r2, lr}
+  bl led_blink_50ms
+  pop {r2, lr}
+  b display_telepathy_game_status
+
+display_telepathy_game_status:
+  push {lr}
+  bl pet_position_middle
+  pop {lr}
 
   ldr r0, =game_round
   ldr r1, [r0]
@@ -23,13 +63,8 @@ display_telepathy_game:
   bl display_under_status_bar
   pop {lr}
 
-  ldr r0, =pet_position
-  ldr r1, [r0]
-  mov r0, 2
-  push {lr}
-  bl led_blink
-  pop {lr}
-
+display_telepathy_game_end:
+  pop {r0-r4}
   bx lr
 .size display_telepathy_game, .-display_telepathy_game
 
