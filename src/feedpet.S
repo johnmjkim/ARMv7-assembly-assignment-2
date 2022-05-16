@@ -5,7 +5,7 @@
 
 @ --------------------- Implementation --------------------
 .type display_feed_pet, %function
-@ pet status
+@ feed pet
 @ --parameters--
 @ none
 display_feed_pet:
