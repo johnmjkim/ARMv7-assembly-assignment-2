@@ -67,12 +67,16 @@ display_pet_status_background_end:
 
 .type change_pet_status, %function
 change_pet_status:
-  push {r0, lr}
+  push {r0-r1, lr}
+  ldr r0, =stress
+  ldr r1, [r0]
+  mov r0, 1
+  cmp r1, 5
+  IT EQ
+  bleq decrease_HP
   mov r0, 1
   bl increase_stress
-  mov r0, 1
-  bl decrease_HP
-  pop {r0, lr}
+  pop {r0-r1, lr}
   bx lr
 .size change_pet_status, .-change_pet_status
 
