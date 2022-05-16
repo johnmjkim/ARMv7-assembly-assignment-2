@@ -64,10 +64,11 @@ SysTick_Handler_end:
 .size SysTick_Handler, .-SysTick_Handler
 
 .data
+@ 50 ms per 1 cycle
+@ 10 seconds per 200 cycles
+@ 30 seconds per 600 cycles
 systic_repeat:
-.word 200, 200
-led_state:
-.word 0
+.word 600, 600
 
 @ SysTick vars
 .set RVR_50MS,     3200000
