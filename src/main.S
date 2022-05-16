@@ -10,7 +10,7 @@ main:
   ldr r0, =hp
   mov r1, 4
   str r1, [r0]
-  ldr r0, =stress
+  ldr r0, =food_stock
   mov r1, 2
   str r1, [r0]
   b loop
@@ -19,7 +19,7 @@ main:
 loop:
   nop
   push {lr}
-  bl display_pet_status
+  bl display_feed_pet
   pop {lr}
   b loop
 

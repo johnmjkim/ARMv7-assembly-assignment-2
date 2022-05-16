@@ -74,6 +74,4 @@ hp:
 .word 5, 0, 5
 stress:
 .word 0, 0, 5
-food_stock:
-.word 0, 0, 5
 
