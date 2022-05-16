@@ -2,10 +2,10 @@
 @ Simple timer library
 @ NOTE: This module depends on symbols.S
 .global init_buttons
-.global SysTick_Handler, setupSYSTICK
+.global SysTick_Handler, init_systick
 
-.type setupSYSTICK, %function
-setupSYSTICK:
+.type init_systick, %function
+init_systick:
   @ set SYST_CSR_ENABLE - bit 0
   @ set SYST_CSR_TICKINT - bit 1
   @ set SYST_CSR_CLKSOURCE - bit 2 (default)
@@ -26,7 +26,7 @@ setupSYSTICK:
   @ str r1, [r0]
 
   bx lr
-.size setupSYSTICK, .-setupSYSTICK
+.size init_systick, .-init_systick
 
 .type SysTick_Handler, %function
 @ Interrupts and toggle led
@@ -44,9 +44,12 @@ SysTick_Handler:
   blgt SysTick_Handler_pass
 SysTick_Handler_do:
   push {r2, r3}
-  mov r0, 2
-  mov r1, 2
-  bl led_toggle
+@   mov r0, 2
+@   mov r1, 2
+@   bl led_toggle
+  push {lr}
+  bl change_pet_status
+  pop {lr}
 
   pop {r2, r3}
   ldr r0, =systic_repeat
@@ -65,10 +68,11 @@ SysTick_Handler_end:
 
 .data
 @ 50 ms per 1 cycle
+@ 1 second per 20 cycles
 @ 10 seconds per 200 cycles
 @ 30 seconds per 600 cycles
 systic_repeat:
-.word 600, 600
+.word 20, 20
 
 @ SysTick vars
 .set RVR_50MS,     3200000

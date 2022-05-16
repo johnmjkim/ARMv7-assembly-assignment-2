@@ -1,7 +1,7 @@
 .syntax unified
 @ Simple petstatus library
 @ NOTE: This module depends on led.S
-.global display_pet_status
+.global display_pet_status, change_pet_status
 
 @ --------------------- Implementation --------------------
 .type display_pet_status, %function
@@ -64,6 +64,93 @@ display_pet_status_background_end:
   pop {r1-r5}
   bx lr
 .size display_pet_status_background, .-display_pet_status_background
+
+.type change_pet_status, %function
+change_pet_status:
+  push {r0, lr}
+  mov r0, 1
+  bl increase_stress
+  mov r0, 1
+  bl decrease_HP
+  pop {r0, lr}
+  bx lr
+.size change_pet_status, .-change_pet_status
+
+.type increase_HP, %function
+@ r0 : increment
+increase_HP:
+  push {r1-r2}
+  push {r0}
+  ldr r0, =hp
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  pop {r0}
+  add r1, r0
+  cmp r1, r2
+  IT GT
+  movgt r1, r2
+  ldr r0, =hp
+  str r1, [r0]
+  pop {r1-r2}
+  bx lr
+.size increase_HP, .-increase_HP
+
+.type increase_stress, %function
+@ r0 : increment
+increase_stress:
+  push {r1-r2}
+  push {r0}
+  ldr r0, =stress
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  pop {r0}
+  add r1, r0
+  cmp r1, r2
+  IT GT
+  movgt r1, r2
+  ldr r0, =stress
+  str r1, [r0]
+  pop {r1-r2}
+  bx lr
+.size increase_stress, .-increase_stress
+
+.type decrease_HP, %function
+@ r0 : increment
+decrease_HP:
+  push {r1-r2}
+  push {r0}
+  ldr r0, =hp
+  ldr r1, [r0]
+  ldr r2, [r0, 4]
+  pop {r0}
+  sub r1, r0
+  cmp r1, r2
+  IT LT
+  movlt r1, r2
+  ldr r0, =hp
+  str r1, [r0]
+  pop {r1-r2}
+  bx lr
+.size decrease_HP, .-decrease_HP
+
+.type decrease_stress, %function
+@ r0 : increment
+decrease_stress:
+  push {r1-r2}
+  push {r0}
+  ldr r0, =stress
+  ldr r1, [r0]
+  ldr r2, [r0, 4]
+  pop {r0}
+  sub r1, r0
+  cmp r1, r2
+  IT LT
+  movlt r1, r2
+  ldr r0, =stress
+  str r1, [r0]
+  pop {r1-r2}
+  bx lr
+.size decrease_stress, .-decrease_stress
 
 .global hp, stress, food_stock
 .data
