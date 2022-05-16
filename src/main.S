@@ -13,6 +13,9 @@ main:
   ldr r0, =correct_motion
   mov r1, 5
   str r1, [r0]
+  push {lr}
+  bl pet_position_middle
+  pop {lr}
   b loop
 .size main, .-main
 
