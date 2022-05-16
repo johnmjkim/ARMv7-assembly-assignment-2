@@ -6,8 +6,23 @@
 @ declare all labels corresponding to functions designed to be called from elsewhere
 @ as global - this is the public API of the library
 @ Function exports:
+.global display_see_pet
 .global display_happy_face, display_neutral_face, display_sad_face
 .global display_happy_sleep_face, display_neutral_sleep_face, display_sad_sleep_face
+
+@ --------------------- Implementation --------------------
+.type display_see_pet, %function
+@ eye (open), mouth (smile)
+@ --parameters--
+@ none
+display_see_pet:
+  push {r0, r1, lr}
+  mov r0, 0
+  mov r1, 0
+  bl display_face
+  pop {r0, r1, lr}
+  bx lr
+.size display_see_pet, .-display_see_pet
 
 @ --------------------- Implementation --------------------
 .type display_happy_face, %function
