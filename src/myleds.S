@@ -6,7 +6,7 @@
 @ declare all labels corresponding to functions designed to be called from elsewhere
 @ as global - this is the public API of the library
 @ Function exports:
-.global led_blink_50ms, led_blink, led_on, led_off
+.global led_blink_50ms, led_toggle, led_blink, led_on, led_off
 
 .type led_blink_50ms, %function
 @ --parameters--
@@ -30,6 +30,40 @@ led_blink_50ms:
 
   bx lr
 .size led_blink_50ms, .-led_blink_50ms
+
+.type led_toggle, %function
+@ --parameters--
+@ r0: row index (0-4 with 0 being the top row)
+@ r1: column index (0-4 with 0 being the left most column)
+@ --return--
+@ none
+led_toggle:
+  push {r4-r6}
+  mov r4, r0
+  mov r5, r1
+  mov r6, 0b1
+  push {lr}
+  bl read_row
+  pop {lr}
+
+  lsl r4, r6, r4
+  eor r0, r0, r4
+  push {lr}
+  bl write_row_pins
+  pop {lr}
+
+  push {lr}
+  bl read_column
+  pop {lr}
+
+  lsl r5, r6, r5
+  eor r0, r0, r5
+  push {lr}
+  bl write_column_pins
+  pop {lr}
+  pop {r4-r6}
+  bx lr
+.size led_toggle, .-led_toggle
 
 .type led_blink, %function
 @ --parameters--

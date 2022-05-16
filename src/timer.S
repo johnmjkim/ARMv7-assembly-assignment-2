@@ -16,7 +16,7 @@ setupSYSTICK:
   @ SysTick to interrupt at a constant rate
   @ count down from FIFTY_MILLISECONDS (3.2M cycles) repeating 5 times
   ldr r0, =SYST_RVR
-  ldr r1, =FIFTY_MILLISECOND
+  ldr r1, =RVR_50MS
   str r1, [r0]
 
   @ @ set priority of SYSTICK
@@ -44,13 +44,9 @@ SysTick_Handler:
   blgt SysTick_Handler_pass
 SysTick_Handler_do:
   push {r2, r3}
-  @ toggle the center led
-  ldr r2, =led_state
-  ldr r3, [r2]
-  eor r3, r3, 0b100
-  str r3, [r0]
   mov r0, 2
-  bl led_blink_50ms
+  mov r1, 2
+  bl led_toggle
 
   pop {r2, r3}
   ldr r0, =systic_repeat
@@ -69,17 +65,13 @@ SysTick_Handler_end:
 
 .data
 systic_repeat:
-.word 10, 10
+.word 200, 200
 led_state:
 .word 0
 
-.data
-.set ONE_MILLISECOND, 0xFA00 @ 64K cycles
-.set TEN_MILLISECOND, 0x9C400 @ 0.64M cycles
-.set FIFTY_MILLISECOND, 0xF42400 @ 3.2M cycles
-
 @ SysTick vars
 .set RVR_50MS,     3200000
+.set RVR_10MS,     640000
 .set RVR_1MS,      64000
 .set RVR_0_5MS,    32000
 
