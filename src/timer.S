@@ -44,9 +44,6 @@ SysTick_Handler:
   blgt SysTick_Handler_pass
 SysTick_Handler_do:
   push {r2, r3}
-@   mov r0, 2
-@   mov r1, 2
-@   bl led_toggle
   push {lr}
   bl change_pet_status
   pop {lr}

@@ -71,11 +71,8 @@ GPIOTE_IRQHandler:
   beq GPIOTE_IRQHandler_B
 
 GPIOTE_IRQHandler_A:
-
-  mov r0, 2
-  mov r1, 0
   push {lr}
-  bl led_blink_50ms
+  bl button_A_clicked
   pop {lr}
 
   @ clear event for button A
@@ -88,11 +85,8 @@ GPIOTE_IRQHandler_A:
   b GPIOTE_IRQHandler_end
 
 GPIOTE_IRQHandler_B:
-
-  mov r0, 2
-  mov r1, 4
   push {lr}
-  bl led_blink_50ms
+  bl button_B_clicked
   pop {lr}
 
   @ clear event for button B
@@ -113,3 +107,31 @@ GPIOTE_IRQHandler_end:
 
   bx lr
 .size GPIOTE_IRQHandler, .-GPIOTE_IRQHandler
+
+.type button_A_clicked, %function
+button_A_clicked:
+  push {r0-r4, lr}
+  ldr r0, =current_state
+  ldr r1, [r0]
+  ldr r0, =current_menu_display
+  ldr r1, [r0]
+  ldr r0, =current_state
+  str r1, [r0]
+
+  @ mov r0, 2
+  @ mov r1, 0
+  @ bl led_blink_50ms
+  pop {r0-r4, lr}
+  bx lr
+.size button_A_clicked, .-button_A_clicked
+
+.type button_B_clicked, %function
+button_B_clicked:
+  push {r0, r1, lr}
+  bl display_scroll
+  @ mov r0, 2
+  @ mov r1, 4
+  @ bl led_blink_50ms
+  pop {r0, r1, lr}
+  bx lr
+.size button_B_clicked, .-button_B_clicked

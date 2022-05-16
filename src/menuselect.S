@@ -2,7 +2,7 @@
 @ Simple menuselect library
 @ NOTE: This module depends on led.S
 .global display_see_pet_option, display_pet_status_option, display_telepathy_game_option, display_feed_pet_option, display_exit_option
-.global display_menu
+.global display_menu, display_scroll
 @ --------------------- Implementation --------------------
 .type display_see_pet_option, %function
 @ see pet
@@ -114,6 +114,23 @@ display_menu_end:
   bx lr
 .size display_menu, .-display_menu
 
+.type display_scroll, %function
+display_scroll:
+  push {r0-r1, lr}
+  ldr r0, =current_menu_display
+  ldr r1, [r0]
+  add r1, 1
+  ldr r0, [r0, 8]
+  add r0, 1
+  cmp r1, r0
+  IT GE
+  subge r1, r0
+  ldr r0, =current_menu_display
+  str r1, [r0]
+  pop {r0-r1, lr}
+  bx lr
+.size display_scroll, .-display_scroll
+
 .data
 menu_display:
 @ see pet
@@ -134,5 +151,12 @@ current_menu_display:
 current_state:
 @ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (menu display)
 .word 4, 0, 4
+previous_state:
+@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet)
+.word 0, 0, 3
+button_A_exit:
+.word 1, 1, 0, 1, 1
+button_B_enabled:
+.word 0, 0, 1, 1, 1
 
 

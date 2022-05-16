@@ -12,9 +12,12 @@ main:
 
   @ Configure systick
   bl init_systick
-  ldr r0, =current_state
-  mov r1, 0
-  str r1, [r0]
+  @ ldr r0, =current_state
+  @ mov r1, 4
+  @ str r1, [r0]
+  @ ldr r0, =current_menu_display
+  @ mov r1, 4
+  @ str r1, [r0]
   b loop
 .size main, .-main
 
