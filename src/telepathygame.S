@@ -50,6 +50,12 @@ display_telepathy_game_left:
   bleq increase_correct_motion
   pop {lr}
 
+  mov r0, 2
+  mov r1, 0
+  push {lr}
+  bl led_blink_50ms
+  pop {lr}
+
   b display_telepathy_game_status
 
 display_telepathy_game_right:
@@ -69,6 +75,12 @@ display_telepathy_game_right:
   cmp r1, 1
   IT EQ
   bleq increase_correct_motion
+  pop {lr}
+
+  mov r0, 2
+  mov r1, 4
+  push {lr}
+  bl led_blink_50ms
   pop {lr}
 
   b display_telepathy_game_status
