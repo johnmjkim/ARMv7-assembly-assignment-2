@@ -36,30 +36,29 @@ init_systick:
 @ none
 SysTick_Handler:
   nop
-  push {lr}
+  push {r0-r3, lr}
   ldr r0, =systic_repeat
-  ldr r2, [r0]
-  cmp r2, 0
-  IT GT
-  blgt SysTick_Handler_pass
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  cmp r1, r2
+  IT LE
+  blle SysTick_Handler_pass
 SysTick_Handler_do:
-  push {r2, r3}
-  push {lr}
+  push {r2, r3, lr}
   bl change_pet_status
-  pop {lr}
+  pop {r2, r3, lr}
 
-  pop {r2, r3}
   ldr r0, =systic_repeat
-  ldr r2, [r0, 4]
-  str r2, [r0]
+  ldr r1, [r0, 4]
+  str r1, [r0]
   b SysTick_Handler_end
 SysTick_Handler_pass:
-  sub r2, r2, 1
+  add r1, r1, 1
   ldr r0, =systic_repeat
-  str r2, [r0]
+  str r1, [r0]
   b SysTick_Handler_end
 SysTick_Handler_end:
-  pop {lr}
+  pop {r0-r3, lr}
   bx lr
 .size SysTick_Handler, .-SysTick_Handler
 
@@ -70,7 +69,7 @@ SysTick_Handler_end:
 @ 10 seconds per 200 cycles
 @ 30 seconds per 600 cycles
 systic_repeat:
-.word 200, 200
+.word 0, 0, 100
 
 @ SysTick vars
 .set RVR_50MS,     3200000
