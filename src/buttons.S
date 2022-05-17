@@ -192,8 +192,14 @@ button_A_clicked_state4:
   ldr r1, [r0]
   ldr r2, [r0, 8]
   str r2, [r0]
+  
   ldr r0, =current_menu_display
   str r1, [r0]
+
+  ldr r0, =correct_sing
+  mov r1, 0
+  str r1, [r0]
+
   b button_A_clicked_end
 
 @ button A clicked at state 5 : menu display
