@@ -124,7 +124,7 @@ systic_repeat:
 pet_status_update_period:
 .word 0, 0, 5
 target_sound_amplitude_update_period:
-.word 0, 0, 3
+.word 0, 0, 1
 
 @ SysTick vars
 .set RVR_50MS,     3200000

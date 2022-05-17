@@ -62,6 +62,7 @@ evaluate_sound_amplitude_within:
   pop {lr}
 evaluate_sound_amplitude_end:
   pop {r0-r2, lr}
+  bx lr
 .size evaluate_sound_amplitude, .-evaluate_sound_amplitude
 
 .type increase_correct_sing, %function
