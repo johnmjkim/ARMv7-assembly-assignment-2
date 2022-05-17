@@ -1,7 +1,8 @@
 .syntax unified
 @ Simple menuselect library
 @ NOTE: This module depends on led.S
-.global display_see_pet_option, display_pet_status_option, display_telepathy_game_option, display_feed_pet_option, display_exit_option
+.global display_see_pet_option, display_pet_status_option, display_telepathy_game_option
+.global display_feed_pet_option, display_sing_to_pet_option, display_exit_option
 .global display_menu, display_scroll
 @ --------------------- Implementation --------------------
 .type display_see_pet_option, %function
@@ -55,14 +56,25 @@ display_feed_pet_option:
   bx lr
 .size display_feed_pet_option, .-display_feed_pet_option
 
-@ --------------------- Implementation --------------------
+.type display_sing_to_pet_option, %function
+@ sing to pet option
+@ --parameters--
+@ none
+display_sing_to_pet_option:
+  push {r0, lr}
+  mov r0, 4
+  bl display_menu
+  pop {r0, lr}
+  bx lr
+.size display_sing_to_pet_option, .-display_sing_to_pet_option
+
 .type display_exit_option, %function
 @ exit option
 @ --parameters--
 @ none
 display_exit_option:
   push {r0, lr}
-  mov r0, 4
+  mov r0, 5
   bl display_menu
   pop {r0, lr}
   bx lr
@@ -75,7 +87,8 @@ display_exit_option:
 @ 1 (pet status), 
 @ 2 (telepathy game), 
 @ 3 (feed pet), 
-@ 4 (exit option)
+@ 4 (sing to pet),
+@ 5 (exit option)
 @ --parameters--
 @ none
 display_menu:
@@ -141,15 +154,17 @@ menu_display:
 .word 14, 0, 2, 1, 1, 2, 1, 2, 2, 2, 3, 3, 3, 4, 2
 @ feed pet
 .word 18, 0, 1, 0, 3, 1, 1, 1, 3, 2, 1, 2, 2, 2, 3, 3, 2, 4, 2
+@ sing to pet
+.word 24, 0, 2, 0, 3, 1, 2, 1, 4, 2, 2, 2, 4, 3, 0, 3, 1, 3, 2, 4, 0, 4, 1, 4, 2
 @ exit option
 .word 18, 0, 0, 0, 4, 1, 1, 1, 3, 2, 2, 3, 1, 3, 3, 4, 0, 4, 4
 
 .global current_menu_display, current_state
 current_menu_display:
-@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (exit option)
-.word 0, 0, 4
+@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (sing to pet), 5 (exit option)
+.word 0, 0, 5
 current_state:
-@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (menu display)
-.word 4, 0, 4
+@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (sing to pet), 5 (menu display)
+.word 5, 0, 5
 
 

@@ -9,7 +9,7 @@ feed_pet:
   push {r0, lr}
   mov r0, 1
   bl decrease_food_stock
-  mov r0, 1
+  mov r0, 2
   bl increase_HP
   pop {r0, lr}
   bx lr

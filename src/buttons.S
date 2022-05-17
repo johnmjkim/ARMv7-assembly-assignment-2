@@ -143,6 +143,9 @@ button_A_clicked:
   cmp r1, 4
   IT EQ
   beq button_A_clicked_state4
+  cmp r1, 5
+  IT EQ
+  beq button_A_clicked_state5
 
 @ button A clicked at state 0 : see pet
 @ go back to menu display
@@ -182,12 +185,24 @@ button_A_clicked_state3:
   str r1, [r0]
   b button_A_clicked_end
 
-@ button A clicked at state 4 : menu display
-@ move to selected option
+@ button A clicked at state 4 : sing to pet
+@ go back to menu display
 button_A_clicked_state4:
+  ldr r0, =current_state
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  str r2, [r0]
+  ldr r0, =current_menu_display
+  str r1, [r0]
+  b button_A_clicked_end
+
+@ button A clicked at state 5 : menu display
+@ move to selected option
+button_A_clicked_state5:
   ldr r0, =current_menu_display
   ldr r1, [r0]
-  cmp r1, 4
+  ldr r2, [r0, 8]
+  cmp r1, r2
   IT EQ
   moveq r1, 0
   ldr r0, =current_state
@@ -213,9 +228,9 @@ button_B_clicked:
   cmp r1, 3
   IT EQ
   beq button_B_clicked_state3
-  cmp r1, 4
+  cmp r1, 5
   IT EQ
-  beq button_B_clicked_state4
+  beq button_B_clicked_state5
   b button_B_clicked_end
 
 @ button B clicked at state 2 : telepathy game
@@ -232,9 +247,9 @@ button_B_clicked_state3:
   bl feed_pet
   b button_B_clicked_end
 
-@ button B clicked at state 4 : menu display
+@ button B clicked at state 5 : menu display
 @ scroll to the next option
-button_B_clicked_state4:
+button_B_clicked_state5:
   bl display_scroll
   b button_B_clicked_end
 

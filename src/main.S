@@ -12,12 +12,7 @@ main:
 
   @ Configure systick
   bl init_systick
-  @ ldr r0, =current_state
-  @ mov r1, 4
-  @ str r1, [r0]
-  @ ldr r0, =current_menu_display
-  @ mov r1, 4
-  @ str r1, [r0]
+
   b loop
 .size main, .-main
 
@@ -30,7 +25,7 @@ loop:
 
 .type display, %function
 @ current_state:
-@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (menu display)
+@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (sing to pet), 5 (menu display)
 display:
   push {r0}
   ldr r0, =current_state
@@ -50,6 +45,9 @@ display:
   cmp r0, 4
   IT EQ
   beq display_state4
+  cmp r0, 5
+  IT EQ
+  beq display_state5
 display_state0:
   push {lr}
   bl display_see_pet
@@ -70,9 +68,14 @@ display_state3:
   bl display_feed_pet
   pop {lr}
   b display_end
-@ current_menu_display
-@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (exit option)
 display_state4:
+  push {lr}
+  bl display_sing_to_pet
+  pop {lr}
+  b display_end
+@ current_menu_display
+@ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (sing to pet), 5 (exit option)
+display_state5:
   ldr r0, =current_menu_display
   ldr r0, [r0]
   push {lr}

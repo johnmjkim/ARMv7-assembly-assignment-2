@@ -1,11 +1,11 @@
 .syntax unified
 @ Simple status bar library
 @ NOTE: This module depends on led.S
-.global display_upper_status_bar, display_under_status_bar
+.global display_upper_status_bar, display_middle_status_bar, display_under_status_bar
 
 @ --------------------- Implementation --------------------
 .type display_upper_status_bar, %function
-@ r0 index 0 (upper), 1 (under)
+@ r0 index 0 (upper), 1 (middle), 2 (under)
 @ r1 score (0~5)
 @ --parameters--
 @ none
@@ -17,15 +17,27 @@ display_upper_status_bar:
   bx lr
 .size display_upper_status_bar, .-display_upper_status_bar
 
-@ --------------------- Implementation --------------------
+.type display_middle_status_bar, %function
+@ r0 index 0 (upper), 1 (middle), 2 (under)
+@ r1 score (0~5)
+@ --parameters--
+@ none
+display_middle_status_bar:
+  push {r0, lr}
+  mov r0, 2
+  bl display_status_bar
+  pop {r0, lr}
+  bx lr
+.size display_middle_status_bar, .-display_middle_status_bar
+
 .type display_under_status_bar, %function
-@ r0 index 0 (upper), 1 (under)
+@ r0 index 0 (upper), 1 (middle), 2 (under)
 @ r1 score (0~5)
 @ --parameters--
 @ none
 display_under_status_bar:
   push {r0, lr}
-  mov r0, 1
+  mov r0, 2
   bl display_status_bar
   pop {r0, lr}
   bx lr
@@ -33,7 +45,7 @@ display_under_status_bar:
 
 @ --------------------- Implementation --------------------
 .type display_status_bar, %function
-@ r0 : menu index 0 (upper), 1 (under),
+@ r0 : menu index 0 (upper), 1 (middle), 2 (under),
 @ r1 : score (0~5)
 @ --parameters--
 @ none
@@ -79,6 +91,8 @@ display_status_bar_end:
 status_bar:
 @ upper status bar
 .word 10, 0, 0, 0, 1, 0, 2, 0, 3, 0, 4
+@ middle status bar
+.word 10, 2, 0, 2, 1, 2, 2, 2, 3, 2, 4
 @ under status bar
 .word 10, 4, 0, 4, 1, 4, 2, 4, 3, 4, 4
 

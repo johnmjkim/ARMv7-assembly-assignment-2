@@ -98,7 +98,7 @@ display_telepathy_game_reset:
   str r1, [r0]
 
   ldr r0, =current_state
-  mov r1, 4
+  ldr r1, [r0, 8]
   str r1, [r0]
 
   b display_telepathy_game_end
