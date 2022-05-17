@@ -4,22 +4,25 @@
 .type main, %function
 main:
   nop
-  @ Configure LEDS for some visual output
-  bl init_leds
+  @ @ Configure LEDS for some visual output
+  @ bl init_leds
 
-  @ Configure buttons for input 
-  bl init_buttons
+  @ @ Configure buttons for input 
+  @ bl init_buttons
 
-  @ Configure systick
-  bl init_systick
-
+  @ @ Configure systick
+  @ bl init_systick
+  mov r0, 1
   b loop
 .size main, .-main
 
 loop:
   nop
+  @ push {lr}
+  @ bl display
+  @ pop {lr}
   push {lr}
-  bl display
+  bl generate_random
   pop {lr}
   b loop
 
