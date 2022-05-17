@@ -105,9 +105,32 @@ target_sound_amplitude_update:
   bl evaluate_sound_amplitude
   pop {lr}
 
+  push {r0-r2}
+  ldr r0, =correct_sing
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  cmp r1, r2
+  IT EQ
+  beq target_sound_amplitude_update_exit
+  b target_sound_amplitude_update_end
+target_sound_amplitude_update_exit:
+
+  ldr r0, =current_state
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  str r2, [r0]
+  ldr r0, =current_menu_display
+  str r1, [r0]
+
+  ldr r0, =correct_sing
+  mov r1, 0
+  str r1, [r0]
+
+target_sound_amplitude_update_end:
   ldr r0, =target_sound_amplitude_update_period
   ldr r1, [r0, 4]
   str r1, [r0]
+  pop {r0-r2}
 
   bx lr
 .size target_sound_amplitude_update, .-target_sound_amplitude_update

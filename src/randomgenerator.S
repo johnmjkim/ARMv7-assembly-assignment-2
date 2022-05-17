@@ -14,6 +14,10 @@ generate_random:
   ldr r2, =ADR_SYST_CVR
   ldr r2, [r2]
   sub r1, r2
+  mov r2, #17
+  mul r1, r2, r1
+  mov r2, #13
+  add r1, r2
   add r2, r0, #1
   udiv r3, r1, r2
   mul r3, r3, r2

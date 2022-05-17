@@ -49,6 +49,7 @@ evaluate_sound_amplitude:
   push {r0-r2, lr}
   ldr r0, =target_sound_amplitude
   ldr r1, [r0]
+  add r1, 1
   ldr r0, =my_sound_amplitude
   ldr r2, [r0]
   cmp r1, r2
@@ -108,7 +109,7 @@ decrease_correct_sing:
 target_sound_amplitude:
 .word 0, 0, 4
 my_sound_amplitude:
-.word 3, 0, 5
+.word 2, 0, 5
 correct_sing:
 .word 0, 0, 5
 
