@@ -11,7 +11,7 @@
 @ --parameters--
 @ none
 display_telepathy_game:
-  push {r0-r2}
+  push {r0-r4}
 
   ldr r0, =pet_position
   ldr r1, [r0]
@@ -32,12 +32,6 @@ display_telepathy_game:
   beq display_telepathy_game_status
 
 display_telepathy_game_left:
-@   mov r0, 2
-@   mov r1, r2
-@   push {r2, lr}
-@   bl led_blink_50ms
-@   pop {r2, lr}
-
   mov r0, 1
   push {lr}
   bl increase_game_round
@@ -46,12 +40,6 @@ display_telepathy_game_left:
   b display_telepathy_game_status
 
 display_telepathy_game_right:
-@   mov r0, 2
-@   mov r1, r2
-@   push {r2, lr}
-@   bl led_blink_50ms
-@   pop {r2, lr}
-  
   mov r0, 1
   push {lr}
   bl increase_correct_motion
@@ -66,6 +54,12 @@ display_telepathy_game_status:
 
   ldr r0, =game_round
   ldr r1, [r0]
+  ldr r2, [r0, 8]
+  cmp r1, r2
+  IT EQ
+  beq display_telepathy_game_reset
+
+  add r1, 1
   push {lr}
   bl display_upper_status_bar
   pop {lr}
@@ -75,10 +69,42 @@ display_telepathy_game_status:
   push {lr}
   bl display_under_status_bar
   pop {lr}
+
+  b display_telepathy_game_end
+
+display_telepathy_game_reset:
+  ldr r0, =game_round
+  ldr r1, [r0, 4]
+  str r1, [r0]
+
+  ldr r2, =correct_motion
+  ldr r1, [r2]
+
+  mov r0, r1
+  push {lr}
+  bl increase_food_stock
+  pop {lr}
+
+  mov r0, r1
+  push {lr}
+  bl decrease_stress
+  pop {lr}
+
+  ldr r0, [r2, 4]
+  str r0, [r2]
+
+  ldr r0, =current_menu_display
+  mov r1, 2
+  str r1, [r0]
+
+  ldr r0, =current_state
+  mov r1, 4
+  str r1, [r0]
+
   b display_telepathy_game_end
 
 display_telepathy_game_end:
-  pop {r0-r2}
+  pop {r0-r4}
   bx lr
 .size display_telepathy_game, .-display_telepathy_game
 
@@ -205,7 +231,7 @@ decrease_correct_motion:
 .global game_round, correct_motion, pet_position
 .data
 game_round:
-.word 1, 1, 5
+.word 0, 0, 5
 correct_motion:
 .word 0, 0, 5
 pet_position:

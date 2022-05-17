@@ -156,7 +156,10 @@ button_A_clicked_state0:
 @ go back to menu display
 button_A_clicked_state1:
   ldr r0, =current_state
-  ldr r1, [r0, 8]
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  str r2, [r0]
+  ldr r0, =current_menu_display
   str r1, [r0]
   b button_A_clicked_end
 
@@ -172,7 +175,10 @@ button_A_clicked_state2:
 @ go back to menu display
 button_A_clicked_state3:
   ldr r0, =current_state
-  ldr r1, [r0, 8]
+  ldr r1, [r0]
+  ldr r2, [r0, 8]
+  str r2, [r0]
+  ldr r0, =current_menu_display
   str r1, [r0]
   b button_A_clicked_end
 

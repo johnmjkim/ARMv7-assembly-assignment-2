@@ -66,10 +66,11 @@ SysTick_Handler_end:
 .data
 @ 50 ms per 1 cycle
 @ 1 second per 20 cycles
+@ 5 seconds per 100 cycles
 @ 10 seconds per 200 cycles
 @ 30 seconds per 600 cycles
 systic_repeat:
-.word 20, 20
+.word 200, 200
 
 @ SysTick vars
 .set RVR_50MS,     3200000
