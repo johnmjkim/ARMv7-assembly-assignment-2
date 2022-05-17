@@ -84,9 +84,9 @@ SysTick_Handler_end:
 
 .type pet_status_update, %function
 pet_status_update:
-  push {r2, r3, lr}
+  push {lr}
   bl change_pet_status
-  pop {r2, r3, lr}
+  pop {lr}
 
   ldr r0, =pet_status_update_period
   ldr r1, [r0, 4]
@@ -97,9 +97,13 @@ pet_status_update:
 
 .type target_sound_amplitude_update, %function
 target_sound_amplitude_update:
-  push {r2, r3, lr}
+  push {lr}
   bl change_target_sound_amplitude
-  pop {r2, r3, lr}
+  pop {lr}
+
+  push {lr}
+  bl evaluate_sound_amplitude
+  pop {lr}
 
   ldr r0, =target_sound_amplitude_update_period
   ldr r1, [r0, 4]
@@ -120,7 +124,7 @@ systic_repeat:
 pet_status_update_period:
 .word 0, 0, 5
 target_sound_amplitude_update_period:
-.word 0, 0, 2
+.word 0, 0, 3
 
 @ SysTick vars
 .set RVR_50MS,     3200000
