@@ -9,19 +9,19 @@ init_systick:
   @ set SYST_CSR_ENABLE - bit 0
   @ set SYST_CSR_TICKINT - bit 1
   @ set SYST_CSR_CLKSOURCE - bit 2 (default)
-  ldr r0, =SYST_CSR
+  ldr r0, =ADR_SYST_CSR
   ldr r1, =(1 << 0 | 1 << 1)
   str r1, [r0]
 
   @ SysTick to interrupt at a constant rate
   @ count down from FIFTY_MILLISECONDS (3.2M cycles) repeating 5 times
-  ldr r0, =SYST_RVR
+  ldr r0, =ADR_SYST_RVR
   ldr r1, =RVR_50MS
   str r1, [r0]
 
   @ @ set priority of SYSTICK
   @ @ SHPR3: B3.2.12 in ARMv7-M Reference Manual
-  @ ldr r0, =SHPR3
+  @ ldr r0, =ADR_SCB_SHPR3
   @ ldr r1, =(1 << 30) @ set the 29-31th bit priority 2 (lower priority)
   @ str r1, [r0]
 
@@ -77,10 +77,3 @@ systic_repeat:
 .set RVR_10MS,     640000
 .set RVR_1MS,      64000
 .set RVR_0_5MS,    32000
-
-@ SysTick register
-.set SYST_CSR, 0xE000E010
-.set SYST_RVR, 0xE000E014
-.set SYST_CVR, 0xE000E018
-.set SYST_CALIB, 0xE000E01C
-.set SHPR3, 0xE000ED20
