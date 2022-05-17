@@ -1,7 +1,7 @@
 .syntax unified
 @ Simple sing to pet library
 @ NOTE: This module depends on led.S
-.global display_sing_to_pet
+.global display_sing_to_pet, change_target_sound_amplitude
 .global increase_correct_sing, decrease_correct_sing
 
 @ --------------------- Implementation --------------------
@@ -11,14 +11,32 @@
 @ none
 display_sing_to_pet:
   push {r0-r1}
+  ldr r0, =target_sound_amplitude
+  ldr r1, [r0]
+  add r1, 1
+  push {lr}
+  bl display_upper_status_bar
+  pop {lr}
+
   ldr r0, =correct_sing
   ldr r1, [r0]
   push {lr}
   bl display_under_status_bar
   pop {lr}
-  pop {r0, r1}
+  pop {r0-r1}
   bx lr
 .size display_sing_to_pet, .-display_sing_to_pet
+
+.type change_target_sound_amplitude, %function
+change_target_sound_amplitude:
+  push {r0-r1, lr}
+  mov r0, 4
+  bl generate_random
+  ldr r1, =target_sound_amplitude
+  str r0, [r1]
+  pop {r0-r1, lr}
+  bx lr
+.size change_target_sound_amplitude, .-change_target_sound_amplitude
 
 .type increase_correct_sing, %function
 @ r0 : increment
@@ -60,6 +78,8 @@ decrease_correct_sing:
 
 .global correct_sing
 .data
+target_sound_amplitude:
+.word 0, 0, 4
 correct_sing:
 .word 5, 0, 5
 

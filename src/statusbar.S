@@ -5,7 +5,6 @@
 
 @ --------------------- Implementation --------------------
 .type display_upper_status_bar, %function
-@ r0 index 0 (upper), 1 (middle), 2 (under)
 @ r1 score (0~5)
 @ --parameters--
 @ none
@@ -18,20 +17,18 @@ display_upper_status_bar:
 .size display_upper_status_bar, .-display_upper_status_bar
 
 .type display_middle_status_bar, %function
-@ r0 index 0 (upper), 1 (middle), 2 (under)
 @ r1 score (0~5)
 @ --parameters--
 @ none
 display_middle_status_bar:
   push {r0, lr}
-  mov r0, 2
+  mov r0, 1
   bl display_status_bar
   pop {r0, lr}
   bx lr
 .size display_middle_status_bar, .-display_middle_status_bar
 
 .type display_under_status_bar, %function
-@ r0 index 0 (upper), 1 (middle), 2 (under)
 @ r1 score (0~5)
 @ --parameters--
 @ none

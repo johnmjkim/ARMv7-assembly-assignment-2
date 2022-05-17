@@ -44,9 +44,29 @@ SysTick_Handler:
   IT LE
   blle SysTick_Handler_pass
 SysTick_Handler_do:
-  push {r2, r3, lr}
-  bl change_pet_status
-  pop {r2, r3, lr}
+  ldr r0, =pet_status_update_period
+  ldr r1, [r0]
+  add r2, r1, 1
+  str r2, [r0]
+  ldr r2, [r0, 8]
+
+  push {lr}
+  cmp r1, r2
+  IT EQ
+  bleq pet_status_update
+  pop {lr}
+
+  ldr r0, =target_sound_amplitude_update_period
+  ldr r1, [r0]
+  add r2, r1, 1
+  str r2, [r0]
+  ldr r2, [r0, 8]
+
+  push {lr}
+  cmp r1, r2
+  IT EQ
+  bleq target_sound_amplitude_update
+  pop {lr} 
 
   ldr r0, =systic_repeat
   ldr r1, [r0, 4]
@@ -62,6 +82,32 @@ SysTick_Handler_end:
   bx lr
 .size SysTick_Handler, .-SysTick_Handler
 
+.type pet_status_update, %function
+pet_status_update:
+  push {r2, r3, lr}
+  bl change_pet_status
+  pop {r2, r3, lr}
+
+  ldr r0, =pet_status_update_period
+  ldr r1, [r0, 4]
+  str r1, [r0]
+
+  bx lr
+.size pet_status_update, .-pet_status_update
+
+.type target_sound_amplitude_update, %function
+target_sound_amplitude_update:
+  push {r2, r3, lr}
+  bl change_target_sound_amplitude
+  pop {r2, r3, lr}
+
+  ldr r0, =target_sound_amplitude_update_period
+  ldr r1, [r0, 4]
+  str r1, [r0]
+
+  bx lr
+.size target_sound_amplitude_update, .-target_sound_amplitude_update
+
 .data
 @ 50 ms per 1 cycle
 @ 1 second per 20 cycles
@@ -69,7 +115,12 @@ SysTick_Handler_end:
 @ 10 seconds per 200 cycles
 @ 30 seconds per 600 cycles
 systic_repeat:
-.word 0, 0, 100
+.word 0, 0, 20
+@ count in seconds
+pet_status_update_period:
+.word 0, 0, 5
+target_sound_amplitude_update_period:
+.word 0, 0, 2
 
 @ SysTick vars
 .set RVR_50MS,     3200000
