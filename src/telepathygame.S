@@ -37,12 +37,38 @@ display_telepathy_game_left:
   bl increase_game_round
   pop {lr}
 
+  mov r0, 1
+  push {lr}
+  bl generate_random
+  pop {lr}
+
+  mov r1, r0
+  mov r0, 1
+  push {lr}
+  cmp r1, 0
+  IT EQ
+  bleq increase_correct_motion
+  pop {lr}
+
   b display_telepathy_game_status
 
 display_telepathy_game_right:
   mov r0, 1
   push {lr}
-  bl increase_correct_motion
+  bl increase_game_round
+  pop {lr}
+
+  mov r0, 1
+  push {lr}
+  bl generate_random
+  pop {lr}
+
+  mov r1, r0
+  mov r0, 1
+  push {lr}
+  cmp r1, 1
+  IT EQ
+  bleq increase_correct_motion
   pop {lr}
 
   b display_telepathy_game_status

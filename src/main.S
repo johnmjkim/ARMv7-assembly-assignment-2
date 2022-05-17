@@ -17,12 +17,8 @@ main:
 
 loop:
   nop
-  @ push {lr}
-  @ bl display
-  @ pop {lr}
-  mov r0, 4
   push {lr}
-  bl generate_random
+  bl display
   pop {lr}
   b loop
 
