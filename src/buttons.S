@@ -73,6 +73,10 @@ GPIOTE_IRQHandler:
 @ execute program by button A
 GPIOTE_IRQHandler_A:
 
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   push {lr}
   bl button_A_clicked
   pop {lr}
@@ -94,6 +98,10 @@ GPIOTE_IRQHandler_A:
 
 @ execute program by button B
 GPIOTE_IRQHandler_B:
+
+  ldr r0, =button_triggered
+  mov r1, 2
+  str r1, [r0]
 
   push {lr}
   bl button_B_clicked

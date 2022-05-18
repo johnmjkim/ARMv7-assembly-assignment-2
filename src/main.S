@@ -17,8 +17,9 @@ main:
   @ bl init_microphone
 
   bl audio_init
-  mov r3, 0
-  mov r4, 0
+  mov r1, 0
+  mov r2, 0
+  mov r3, 4
   b loop
 .size main, .-main
 
@@ -28,24 +29,66 @@ loop:
   bl display
   pop {lr}
 
-  @ make sure audio is always off
   ldr r0, =button_triggered
   ldr r4, [r0]
+  cmp r4, 0
+  IT EQ
+  beq loop_button_no_triggered
+  cmp r4, 1
+  IT EQ
+  beq loop_button_A_triggered
+  cmp r4, 2
+  IT EQ
+  beq loop_button_B_triggered
 
-loop_button_triggered:
-
+loop_button_no_triggered:
+  @ make sure audio is always off
+  mov r1, 0
+  mov r2, 0
   b loop_end
 
+loop_button_A_triggered:  
+  ldr r0, =button_A_trigger_sound
+  ldr r2, [r0]
+  ldr r0, =button_sound_count
+  ldr r4, [r0]
+  ldr r5, [r0, 8]
+  cmp r4, r5
+  IT EQ
+  beq loop_button_sound_count_reset
+  add r4, 1
+  str r4, [r0]
+  b loop_end
+
+loop_button_B_triggered:  
+  ldr r0, =button_B_trigger_sound
+  ldr r2, [r0]
+  ldr r0, =button_sound_count
+  ldr r4, [r0]
+  ldr r5, [r0, 8]
+  cmp r4, r5
+  IT EQ
+  beq loop_button_sound_count_reset
+  add r4, 1
+  str r4, [r0]
+  b loop_end
+
+loop_button_sound_count_reset:
+  ldr r0, =button_sound_count
+  ldr r4, [r0, 4]
+  str r4, [r0]
+  ldr r0, =button_triggered
+  mov r4, 0
+  str r4, [r0]
+
 loop_end:
-  add r3, r4
-  mov r0, r3
-  push {r3-r4}
+  add r1, r2
+  mov r0, r1
+  push {r1-r2}
   bl audio_play_sample
-  pop {r3-r4}
+  pop {r1-r2}
 
   b loop
-
-
 
 .type display, %function
 @ current_state:
@@ -115,6 +158,13 @@ display_end:
 
 .data
 button_triggered:
-.word 0, 0, 400, 500
-button_triggered_count:
-.word 0, 0, 32000
+@ 0 (none), 1 (button A), 2 (butten B)
+.word 0, 0, 1, 2
+button_A_trigger_sound:
+@ button A
+.word 300, 500, 400, 600
+button_B_trigger_sound:
+@ button B
+.word 600, 400, 500, 300
+button_sound_count:
+.word 0, 0, 1000
