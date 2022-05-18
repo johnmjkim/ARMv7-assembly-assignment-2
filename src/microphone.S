@@ -10,6 +10,7 @@
 @ --parameters--
 @ none
 init_microphone:
+  ldr r0, =ADR_PDM
 @   @ 1: Configure GPIOTE_CONFIG[0]
 @   @ Need to setup: mode, pin, port, polarity in the configuration register for GPIOTE[0]
 @   @ Section 6.9.4.8 in nRF52833 reference manual
@@ -52,7 +53,7 @@ init_microphone:
 
 .type PDM_IRQHandler, %function
 PDM_IRQHandler:
-    
+
 
   b PDM_IRQHandler_end
 
@@ -60,3 +61,32 @@ PDM_IRQHandler_end:
 
   bx lr
 .size PDM_IRQHandler, .-PDM_IRQHandler
+
+.global ADR_PDM @ 0x4001D000
+.global PDM_ID  @ 29
+
+@ ---------- GPIO Tasks and Events ---------- @
+
+@ GPIOTE Base Address
+.set ADR_PDM, 0x4001D000
+@ ID of PDM in NVIC
+.set PDM_ID, 29
+@ PDM Offsets
+.set OFS_PDM_TASKS_START, 0x000
+.set OFS_PDM_TASKS_STOP, 0x000
+.set OFS_PDM_EVENTS_STARTED, 0x100
+.set OFS_PDM_EVENTS_STOPPED, 0x104
+.set OFS_PDM_EVENTS_END, 0x108
+.set OFS_PDM_INTEN, 0x300
+.set OFS_PDM_INTENSET, 0x304
+.set OFS_PDM_INTENCLR, 0x308
+.set OFS_PDM_ENABLE, 0x500
+.set OFS_PDM_PDMCLKCTRL, 0x504
+.set OFS_PDM_MODE, 0x508
+.set OFS_PDM_GAINL, 0x518
+.set OFS_PDM_GAINR, 0x51C
+.set OFS_PDM_RATIO, 0x520
+.set OFS_PDM_PSEL_CLK, 0x540
+.set OFS_PDM_PSEL_DIN, 0x560
+.set OFS_PDM_SAMPLE_PTR, 0x560
+.set OFS_PDM_SAMPLE_MAXCNT, 0x564

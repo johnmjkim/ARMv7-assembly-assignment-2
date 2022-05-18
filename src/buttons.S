@@ -6,7 +6,7 @@
 
 @ --------------------- Implementation --------------------
 .type init_buttons, %function
-@ telepathy game
+@ initialize button
 @ --parameters--
 @ none
 init_buttons:
