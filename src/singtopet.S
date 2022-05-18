@@ -104,7 +104,7 @@ decrease_correct_sing:
   bx lr
 .size decrease_correct_sing, .-decrease_correct_sing
 
-.global correct_sing
+.global target_sound_amplitude, my_sound_amplitude, correct_sing
 .data
 target_sound_amplitude:
 .word 0, 0, 4

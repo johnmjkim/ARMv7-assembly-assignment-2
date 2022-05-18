@@ -7,19 +7,22 @@ main:
   @ Configure LEDS for some visual output
   bl init_leds
 
-  @ Configure buttons for input 
-  bl init_buttons
+  @ @ Configure buttons for input 
+  @ bl init_buttons
 
-  @ Configure systick
-  bl init_systick
+  @ @ Configure systick
+  @ bl init_systick
   b loop
 .size main, .-main
 
 loop:
   nop
   push {lr}
-  bl display
+  bl display_sing_to_pet
   pop {lr}
+  @ push {lr}
+  @ bl display
+  @ pop {lr}
   b loop
 
 .type display, %function

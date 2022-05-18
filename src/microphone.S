@@ -62,6 +62,12 @@ PDM_IRQHandler_end:
   bx lr
 .size PDM_IRQHandler, .-PDM_IRQHandler
 
+.type record_my_amplitude, %function
+record_my_amplitude:
+  ldr r0, =record_my_amplitude
+
+.size record_my_amplitude, .-record_my_amplitude
+
 .global ADR_PDM @ 0x4001D000
 .global PDM_ID  @ 29
 
