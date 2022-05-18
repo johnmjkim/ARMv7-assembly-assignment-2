@@ -1,7 +1,7 @@
 .syntax unified
 @ Simple microphone library
 @ NOTE: This module depends on symbols.S
-.global init_microphone
+.global init_microphone, record_my_amplitude, start_PDM, stop_PDM
 .global PDM_IRQHandler
 
 @ --------------------- Implementation --------------------
@@ -21,9 +21,9 @@ init_microphone:
   @ 2: Enable Interrupt for PDM module (id = 29)
   @ S6.14.7.7 in nRF52833 reference manual
   ldr r0, =ADR_PDM
-  ldr r1, =OFS_PDM_INTENSET
+  ldr r1, =OFS_PDM_INTEN
   add r0, r1
-  ldr r1, =0b11
+  ldr r1, =0b1
   str r1, [r0]
 
   @ 3: enable PDM (interrupt #29 = NVIC_PDM_ID) in NVIC_ISER0
@@ -46,6 +46,9 @@ PDM_IRQHandler:
   b PDM_IRQHandler_end
 
 PDM_IRQHandler_end:
+  push {lr}
+  bl stop_PDM
+  pop {lr}
 
   bx lr
 .size PDM_IRQHandler, .-PDM_IRQHandler
@@ -57,15 +60,54 @@ PDM_IRQHandler_end:
 @ none
 record_my_amplitude:
   push {r1}
-  ldr r1, =record_my_amplitude
+  ldr r1, =my_sound_amplitude
   str r0, [r1]
   pop {r1}
 
   bx lr
 .size record_my_amplitude, .-record_my_amplitude
 
+.type start_PDM, %function
+@ --parameters--
+@ none
+@ --result--
+@ none
+start_PDM:
+  push {r0-r1}
+  ldr r0, =ADR_PDM
+  ldr r1, =OFS_PDM_TASKS_START
+  add r0, r1
+  ldr r1, =0b1
+  str r1, [r0]
+  pop {r0-r1}
+
+  bx lr
+.size start_PDM, .-start_PDM
+
+.type stop_PDM, %function
+@ --parameters--
+@ none
+@ --result--
+@ none
+stop_PDM:
+  push {r0-r1}
+  ldr r0, =ADR_PDM
+  ldr r1, =OFS_PDM_TASKS_STOP
+  add r0, r1
+  ldr r1, =0b1
+  str r1, [r0]
+  pop {r0-r1}
+
+  bx lr
+.size stop_PDM, .-stop_PDM
+
 .global ADR_PDM @ 0x4001D000
 .global PDM_ID  @ 29
+.global OFS_PDM_TASKS_START @ 0x000
+.global OFS_PDM_TASKS_STOP @ 0x004
+.global OFS_PDM_EVENTS_STARTED @ 0x100
+.global OFS_PDM_EVENTS_STOPPED @ 0x104
+
 
 @ ---------- PDM Tasks and Events ---------- @
 
@@ -75,7 +117,7 @@ record_my_amplitude:
 .set PDM_ID, 29
 @ PDM Offsets
 .set OFS_PDM_TASKS_START, 0x000
-.set OFS_PDM_TASKS_STOP, 0x000
+.set OFS_PDM_TASKS_STOP, 0x004
 .set OFS_PDM_EVENTS_STARTED, 0x100
 .set OFS_PDM_EVENTS_STOPPED, 0x104
 .set OFS_PDM_EVENTS_END, 0x108

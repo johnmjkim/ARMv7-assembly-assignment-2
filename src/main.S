@@ -7,28 +7,45 @@ main:
   @ Configure LEDS for some visual output
   bl init_leds
 
-  @ @ Configure buttons for input 
-  @ bl init_buttons
+  @ Configure buttons for input 
+  bl init_buttons
 
-  @ @ Configure systick
-  @ bl init_systick
+  @ Configure systick
+  bl init_systick
 
-  @ Configure microphone
-  bl init_microphone
+  @ @ Configure microphone
+  @ bl init_microphone
+
+  bl audio_init
+  mov r3, 0
+  mov r4, 0
   b loop
 .size main, .-main
 
 loop:
   nop
-  @ push {lr}
-  @ bl display
-  @ pop {lr}
-
   push {lr}
-  bl display_sing_to_pet
+  bl display
   pop {lr}
 
+  @ make sure audio is always off
+  ldr r0, =button_triggered
+  ldr r4, [r0]
+
+loop_button_triggered:
+
+  b loop_end
+
+loop_end:
+  add r3, r4
+  mov r0, r3
+  push {r3-r4}
+  bl audio_play_sample
+  pop {r3-r4}
+
   b loop
+
+
 
 .type display, %function
 @ current_state:
@@ -93,3 +110,11 @@ display_end:
   pop {r0}
   bx lr
 .size display, .-display
+
+.global button_triggered
+
+.data
+button_triggered:
+.word 0, 0, 400, 500
+button_triggered_count:
+.word 0, 0, 32000
