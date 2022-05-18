@@ -12,17 +12,22 @@ main:
 
   @ @ Configure systick
   @ bl init_systick
+
+  @ Configure microphone
+  bl init_microphone
   b loop
 .size main, .-main
 
 loop:
   nop
-  push {lr}
-  bl display_sing_to_pet
-  pop {lr}
   @ push {lr}
   @ bl display
   @ pop {lr}
+
+  push {lr}
+  bl display_sing_to_pet
+  pop {lr}
+
   b loop
 
 .type display, %function

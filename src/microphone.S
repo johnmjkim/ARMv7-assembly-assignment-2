@@ -10,51 +10,39 @@
 @ --parameters--
 @ none
 init_microphone:
+  @ 1: Enable PDM module (id = 29)
+  @ S6.14.7.0 in nRF52833 reference manual
   ldr r0, =ADR_PDM
-@   @ 1: Configure GPIOTE_CONFIG[0]
-@   @ Need to setup: mode, pin, port, polarity in the configuration register for GPIOTE[0]
-@   @ Section 6.9.4.8 in nRF52833 reference manual
-@   @ mode = 1 (event), pin = 14 and port = 0 (P0.14 = Button A), polarity = 1 (LoToHi)
-@   ldr r0, =ADR_GPIOTE
-@   ldr r1, =OFS_GPIOTE_CONFIG0
-@   add r0, r1
-@   ldr r1, =(1 | 14 << 8 | 0 << 13 | 1 << 16)
-@   str r1, [r0]
+  ldr r1, =OFS_PDM_ENABLE
+  add r0, r1
+  ldr r1, =0b1
+  str r1, [r0]
 
-@   @ 1: Configure GPIOTE_CONFIG[1]
-@   @ Need to setup: mode, pin, port, polarity in the configuration register for GPIOTE[1]
-@   @ Section 6.9.4.8 in nRF52833 reference manual
-@   @ mode = 1 (event), pin = 23 and port = 0 (P0.23 = Button B), polarity = 1 (LoToHi)
-@   @ ldr r0, =GPIOTE_CONFIG1
-@   ldr r0, =ADR_GPIOTE
-@   ldr r1, =OFS_GPIOTE_CONFIG1
-@   add r0, r1
-@   ldr r1, =(1 | 23 << 8 | 0 << 13 | 1 << 16)
-@   str r1, [r0]
+  @ 2: Enable Interrupt for PDM module (id = 29)
+  @ S6.14.7.7 in nRF52833 reference manual
+  ldr r0, =ADR_PDM
+  ldr r1, =OFS_PDM_INTENSET
+  add r0, r1
+  ldr r1, =0b11
+  str r1, [r0]
 
-@   @ 2: Enable Interrupt for GPIOTE[0], GPIOTE[1] (id = 6)
-@   @ S6.9.4.6 in nRF52833 reference manual
-@   ldr r0, =ADR_GPIOTE
-@   ldr r1, =OFS_GPIOTE_INTENSET
-@   add r0, r1
-@   ldr r1, =0b11
-@   str r1, [r0]
-
-@   @ 3: enable GPIOTE (interrupt #6 = NVIC_GPIOTE_ID) in NVIC_ISER0
-@   @ NVIC_ISER0: B3.4.4 in ARMv7-M Reference Manual
-@   ldr r0, =ADR_NVIC
-@   ldr r1, =OFS_NVIC_ISER0
-@   add r0, r1
-@   ldr r1, =(1 << 6) @ set the 6th bit since NVIC_GPIOTE_ID = 6
-@   str r1, [r0]
+  @ 3: enable PDM (interrupt #29 = NVIC_PDM_ID) in NVIC_ISER0
+  @ NVIC_ISER0: B3.4.4 in ARMv7-M Reference Manual
+  ldr r0, =ADR_NVIC
+  ldr r1, =OFS_NVIC_ISER0
+  add r0, r1
+  ldr r1, =(1 << 29) @ set the 29th bit since NVIC_PDM_ID = 29
+  str r1, [r0]
 
   bx lr
 .size init_microphone, .-init_microphone
 
 .type PDM_IRQHandler, %function
 PDM_IRQHandler:
-
-
+  mov r0, 3
+  push {lr}
+  bl record_my_amplitude
+  pop {lr}
   b PDM_IRQHandler_end
 
 PDM_IRQHandler_end:
@@ -63,9 +51,17 @@ PDM_IRQHandler_end:
 .size PDM_IRQHandler, .-PDM_IRQHandler
 
 .type record_my_amplitude, %function
+@ --parameters--
+@ r0 recorded amplited
+@ --result--
+@ none
 record_my_amplitude:
-  ldr r0, =record_my_amplitude
+  push {r1}
+  ldr r1, =record_my_amplitude
+  str r0, [r1]
+  pop {r1}
 
+  bx lr
 .size record_my_amplitude, .-record_my_amplitude
 
 .global ADR_PDM @ 0x4001D000
