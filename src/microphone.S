@@ -65,9 +65,9 @@ PDM_IRQHandler_end:
 .global ADR_PDM @ 0x4001D000
 .global PDM_ID  @ 29
 
-@ ---------- GPIO Tasks and Events ---------- @
+@ ---------- PDM Tasks and Events ---------- @
 
-@ GPIOTE Base Address
+@ PDM Base Address
 .set ADR_PDM, 0x4001D000
 @ ID of PDM in NVIC
 .set PDM_ID, 29
