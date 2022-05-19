@@ -185,15 +185,30 @@ display_end:
 
 .data
 button_triggered:
-@ 0 (none), 1 (button A), 2 (butten B)
-.word 0, 0, 2
+@ 0 (none)
+@ 1 (button A : select option)
+@ 2 (button A : exit)
+@ 3 (button A : select left at telepahty game)
+@ 4 (button B : scroll)
+@ 5 (button B : select right at telepahty game)
+@ 6 (button B : feed pet)
+.word 0, 0, 6
 button_trigger_sound:
 @ none
 .word 0, 0, 0
-@ button A
+@ button A : select option
 .word 500, 800, 500, 1000, 500
-@ button B
+@ button A : select exit
+.word 1500, 800, 1500, 1000, 1500
+@ button A : select left at telepahty game
+.word 500, 0, 500, 0, 0
+@ button B : scroll
 .word 800, 500, 1000, 500, 800
+@ button B : select right at telepahty game
+.word 1500, 0, 1500, 0, 0
+@ button B : feed pet
+.word 800, 1500, 1000, 1500, 800
+
 button_sound_count:
 .word 0, 0, 200
 button_sound_index:

@@ -153,7 +153,7 @@ button_A_clicked:
 @ go back to menu display
 button_A_clicked_state0:
   ldr r0, =button_triggered
-  mov r1, 1
+  mov r1, 2
   str r1, [r0]
 
   ldr r0, =current_state
@@ -165,7 +165,7 @@ button_A_clicked_state0:
 @ go back to menu display
 button_A_clicked_state1:
   ldr r0, =button_triggered
-  mov r1, 1
+  mov r1, 2
   str r1, [r0]
 
   ldr r0, =current_state
@@ -181,7 +181,7 @@ button_A_clicked_state1:
 @ select pet to move left
 button_A_clicked_state2:
   ldr r0, =button_triggered
-  mov r1, 1
+  mov r1, 3
   str r1, [r0]
 
   push {lr}
@@ -193,7 +193,7 @@ button_A_clicked_state2:
 @ go back to menu display
 button_A_clicked_state3:
   ldr r0, =button_triggered
-  mov r1, 1
+  mov r1, 2
   str r1, [r0]
 
   ldr r0, =current_state
@@ -209,7 +209,7 @@ button_A_clicked_state3:
 @ go back to menu display
 button_A_clicked_state4:
   ldr r0, =button_triggered
-  mov r1, 1
+  mov r1, 2
   str r1, [r0]
 
   ldr r0, =current_state
@@ -271,7 +271,7 @@ button_B_clicked:
 @ select pet to move right
 button_B_clicked_state2:
   ldr r0, =button_triggered
-  mov r1, 2
+  mov r1, 5
   str r1, [r0]
 
   push {lr}
@@ -283,7 +283,7 @@ button_B_clicked_state2:
 @ feed my pet, increase HP by 1
 button_B_clicked_state3:
   ldr r0, =button_triggered
-  mov r1, 2
+  mov r1, 6
   str r1, [r0]
 
   push {lr}
@@ -295,7 +295,7 @@ button_B_clicked_state3:
 @ scroll to the next option
 button_B_clicked_state5:
   ldr r0, =button_triggered
-  mov r1, 2
+  mov r1, 4
   str r1, [r0]
 
   push {lr}
