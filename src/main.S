@@ -117,122 +117,6 @@ loop_end:
 
   b loop_end
 
-@ loop_start:
-@   nop
-@   ldr r0, =button_triggered
-@   ldr r3, [r0]
-@   cmp r3, 0
-@   IT EQ
-@   beq loop_end_set_up
-@   b loop_set_up
-
-@ loop_end_set_up:
-@   ldr r0, =button_sound_count
-@   ldr r5, [r0, 8]
-
-@   ldr r0, =button_triggered
-@   ldr r3, [r0, 4]
-@   str r3, [r0]
-
-@   mov r1, 0
-@   mov r2, 0
-@   mov r4, 0
-
-@ loop_end:
-@   cmp r4, r5
-@   IT EQ
-@   beq loop_start
-
-@   push {lr}
-@   bl display
-@   pop {lr}
-
-@   add r1, r2
-@   mov r0, r1
-@   push {r1-r3}
-@   bl audio_play_sample
-@   pop {r1-r3}
-
-@   add r4, 1
-
-@   b loop_end
-
-@ loop_set_up:
-@   @ get index of beat
-@   mov r4, 4
-@   ldr r0, =button_sound_index
-@   ldr r6, [r0, 8]
-@   mul r5, r3, r4
-@   mul r5, r5, r6
-
-@   @ beat starter r1 and adder r2
-@   mov r1, 0
-@   ldr r0, =button_trigger_sound
-@   ldr r2, [r0, r5]
-
-@   @ one beat count
-@   mov r4, 0
-@   ldr r0, =button_sound_count
-@   ldr r5, [r0, 8]
-@ loop:
-@   cmp r4, r5
-@   IT EQ
-@   beq loop_1_set_up
-
-@   push {lr}
-@   bl display
-@   pop {lr}
-
-@   add r1, r2
-@   mov r0, r1
-@   push {r1-r3}
-@   bl audio_play_sample
-@   pop {r1-r3}
-
-@   add r4, 1
-
-@   b loop
-
-@ loop_1_set_up:
-@   @ get index of beat
-@   mov r4, 4
-@   ldr r0, =button_sound_index
-@   ldr r6, [r0, 8]
-@   mul r5, r3, r4
-@   mul r5, r5, r6
-
-@   @ index of beat added
-@   add r5, 4
-
-@   @ beat starter r1 and adder r2
-@   mov r1, 0
-@   ldr r0, =button_trigger_sound
-@   ldr r2, [r0, r5]
-
-@   @ one beat count
-@   mov r4, 0
-@   ldr r0, =button_sound_count
-@   ldr r5, [r0, 8]
-
-@ loop_1:
-@   cmp r4, r5
-@   IT EQ
-@   beq loop_end_set_up
-
-@   push {lr}
-@   bl display
-@   pop {lr}
-
-@   add r1, r2
-@   mov r0, r1
-@   push {r1-r3}
-@   bl audio_play_sample
-@   pop {r1-r3}
-
-@   add r4, 1
-
-@   b loop_1
-
 .type display, %function
 @ current_state:
 @ 0 (see pet), 1 (pet status), 2 (telepathy game), 3 (feed pet), 4 (sing to pet), 5 (menu display)
@@ -302,21 +186,15 @@ display_end:
 .data
 button_triggered:
 @ 0 (none), 1 (button A), 2 (butten B)
-.word 0, 0, 1, 2
-button_A_trigger_sound:
-@ button A
-.word 500, 800, 600
-button_B_trigger_sound:
-@ button B
-.word 600, 500, 800
+.word 0, 0, 2
 button_trigger_sound:
 @ none
 .word 0, 0, 0
 @ button A
-.word 500, 800, 600
+.word 500, 800, 500, 1000, 500
 @ button B
-.word 600, 500, 800
+.word 800, 500, 1000, 500, 800
 button_sound_count:
 .word 0, 0, 200
 button_sound_index:
-.word 0, 0, 2
+.word 0, 0, 4

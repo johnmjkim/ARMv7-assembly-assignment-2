@@ -73,10 +73,6 @@ GPIOTE_IRQHandler:
 @ execute program by button A
 GPIOTE_IRQHandler_A:
 
-  ldr r0, =button_triggered
-  mov r1, 1
-  str r1, [r0]
-
   push {lr}
   bl button_A_clicked
   pop {lr}
@@ -98,10 +94,6 @@ GPIOTE_IRQHandler_A:
 
 @ execute program by button B
 GPIOTE_IRQHandler_B:
-
-  ldr r0, =button_triggered
-  mov r1, 2
-  str r1, [r0]
 
   push {lr}
   bl button_B_clicked
@@ -160,6 +152,10 @@ button_A_clicked:
 @ button A clicked at state 0 : see pet
 @ go back to menu display
 button_A_clicked_state0:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   ldr r0, =current_state
   ldr r1, [r0, 8]
   str r1, [r0]
@@ -168,10 +164,15 @@ button_A_clicked_state0:
 @ button A clicked at state 1 : pet status
 @ go back to menu display
 button_A_clicked_state1:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   ldr r0, =current_state
   ldr r1, [r0]
   ldr r2, [r0, 8]
   str r2, [r0]
+
   ldr r0, =current_menu_display
   str r1, [r0]
   b button_A_clicked_end
@@ -179,6 +180,10 @@ button_A_clicked_state1:
 @ button A clicked at state 2 : telepathy game
 @ select pet to move left
 button_A_clicked_state2:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   push {lr}
   bl pet_position_left
   pop {lr}
@@ -187,10 +192,15 @@ button_A_clicked_state2:
 @ button A clicked at state 3 : feed pet
 @ go back to menu display
 button_A_clicked_state3:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   ldr r0, =current_state
   ldr r1, [r0]
   ldr r2, [r0, 8]
   str r2, [r0]
+
   ldr r0, =current_menu_display
   str r1, [r0]
   b button_A_clicked_end
@@ -198,6 +208,10 @@ button_A_clicked_state3:
 @ button A clicked at state 4 : sing to pet
 @ go back to menu display
 button_A_clicked_state4:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   ldr r0, =current_state
   ldr r1, [r0]
   ldr r2, [r0, 8]
@@ -215,6 +229,10 @@ button_A_clicked_state4:
 @ button A clicked at state 5 : menu display
 @ move to selected option
 button_A_clicked_state5:
+  ldr r0, =button_triggered
+  mov r1, 1
+  str r1, [r0]
+
   ldr r0, =current_menu_display
   ldr r1, [r0]
   ldr r2, [r0, 8]
@@ -252,6 +270,10 @@ button_B_clicked:
 @ button B clicked at state 2 : telepathy game
 @ select pet to move right
 button_B_clicked_state2:
+  ldr r0, =button_triggered
+  mov r1, 2
+  str r1, [r0]
+
   push {lr}
   bl pet_position_right
   pop {lr}
@@ -260,13 +282,25 @@ button_B_clicked_state2:
 @ button B clicked at state 3 : feed pet
 @ feed my pet, increase HP by 1
 button_B_clicked_state3:
+  ldr r0, =button_triggered
+  mov r1, 2
+  str r1, [r0]
+
+  push {lr}
   bl feed_pet
+  pop {lr}
   b button_B_clicked_end
 
 @ button B clicked at state 5 : menu display
 @ scroll to the next option
 button_B_clicked_state5:
+  ldr r0, =button_triggered
+  mov r1, 2
+  str r1, [r0]
+
+  push {lr}
   bl display_scroll
+  pop {lr}
   b button_B_clicked_end
 
 button_B_clicked_end:
