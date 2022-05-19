@@ -10,8 +10,33 @@
 @ --parameters--
 @ none
 init_microphone:
+  @ Configure RUN_MIC : setting RUN_MIC as output 
+  @ pin = 20 and port = 0 (P0.20 = Run Mic)
+  ldr r0, =ADR_P0
+  ldr r1, =OFS_GPIO_DIR
+  ldr r2, [r0, r1]
+  ldr r3, =(1 << 20)
+  orr r2, r2, r3
+  str r2, [r0, r1]
+
+  @ Configure RUN_MIC : setting RUN_MIC as High
+  ldr r0, =ADR_P0
+  ldr r1, =OFS_GPIO_OUT
+  ldr r2, [r0, r1]
+  ldr r3, =(1 << 20)
+  orr r2, r2, r3
+  str r2, [r0, r1]
+
   @ Configure MIC_IN : setting MIC_IN as input 
   @ pin = 5 and port = 0 (P0.05 = Mic In)
+  ldr r0, =ADR_P0
+  ldr r1, =OFS_GPIO_DIR
+  ldr r2, [r0, r1]
+  ldr r3, =(1 << 5)
+  orr r2, r2, r3
+  str r2, [r0, r1]
+
+  @ Configure MIC_IN : setting MICIN as High
   ldr r0, =ADR_P0
   ldr r1, =OFS_GPIO_IN
   ldr r2, [r0, r1]
@@ -36,54 +61,54 @@ init_microphone:
 @   ldr r1, =0b1
 @   str r1, [r0]
 
-@   @ 2: Enable Interrupt for PDM module (id = 29)
-@   @ S6.14.7.7 in nRF52833 reference manual
-@   ldr r0, =ADR_PDM
-@   ldr r1, =OFS_PDM_INTEN
-@   add r0, r1
-@   ldr r1, =0b1
-@   str r1, [r0]
+@   @ @ 2: Enable Interrupt for PDM module (id = 29)
+@   @ @ S6.14.7.7 in nRF52833 reference manual
+@   @ ldr r0, =ADR_PDM
+@   @ ldr r1, =OFS_PDM_INTEN
+@   @ add r0, r1
+@   @ ldr r1, =0b1
+@   @ str r1, [r0]
 
-@   @ 3: enable PDM (interrupt #29 = NVIC_PDM_ID) in NVIC_ISER0
-@   @ NVIC_ISER0: B3.4.4 in ARMv7-M Reference Manual
-@   ldr r0, =ADR_NVIC
-@   ldr r1, =OFS_NVIC_ISER0
-@   add r0, r1
-@   ldr r1, =(1 << 29) @ set the 29th bit since NVIC_PDM_ID = 29
-@   str r1, [r0]
+@   @ @ 3: enable PDM (interrupt #29 = NVIC_PDM_ID) in NVIC_ISER0
+@   @ @ NVIC_ISER0: B3.4.4 in ARMv7-M Reference Manual
+@   @ ldr r0, =ADR_NVIC
+@   @ ldr r1, =OFS_NVIC_ISER0
+@   @ add r0, r1
+@   @ ldr r1, =(1 << 29) @ set the 29th bit since NVIC_PDM_ID = 29
+@   @ str r1, [r0]
 
 @   bx lr
 @ .size init_microphone, .-init_microphone
 
-@ .type PDM_IRQHandler, %function
-@ PDM_IRQHandler:
-@   mov r0, 3
-@   push {lr}
-@   bl record_my_amplitude
-@   pop {lr}
-@   b PDM_IRQHandler_end
+@ @ .type PDM_IRQHandler, %function
+@ @ PDM_IRQHandler:
+@ @   mov r0, 3
+@ @   push {lr}
+@ @   bl record_my_amplitude
+@ @   pop {lr}
+@ @   b PDM_IRQHandler_end
 
-@ PDM_IRQHandler_end:
-@   push {lr}
-@   bl stop_PDM
-@   pop {lr}
+@ @ PDM_IRQHandler_end:
+@ @   push {lr}
+@ @   bl stop_PDM
+@ @   pop {lr}
 
-@   bx lr
-@ .size PDM_IRQHandler, .-PDM_IRQHandler
+@ @   bx lr
+@ @ .size PDM_IRQHandler, .-PDM_IRQHandler
 
-@ .type record_my_amplitude, %function
-@ @ --parameters--
-@ @ r0 recorded amplited
-@ @ --result--
-@ @ none
-@ record_my_amplitude:
-@   push {r1}
-@   ldr r1, =my_sound_amplitude
-@   str r0, [r1]
-@   pop {r1}
+@ @ .type record_my_amplitude, %function
+@ @ @ --parameters--
+@ @ @ r0 recorded amplited
+@ @ @ --result--
+@ @ @ none
+@ @ record_my_amplitude:
+@ @   push {r1}
+@ @   ldr r1, =my_sound_amplitude
+@ @   str r0, [r1]
+@ @   pop {r1}
 
-@   bx lr
-@ .size record_my_amplitude, .-record_my_amplitude
+@ @   bx lr
+@ @ .size record_my_amplitude, .-record_my_amplitude
 
 @ .type start_PDM, %function
 @ @ --parameters--
@@ -125,7 +150,6 @@ init_microphone:
 @ .global OFS_PDM_TASKS_STOP @ 0x004
 @ .global OFS_PDM_EVENTS_STARTED @ 0x100
 @ .global OFS_PDM_EVENTS_STOPPED @ 0x104
-
 
 @ @ ---------- PDM Tasks and Events ---------- @
 
