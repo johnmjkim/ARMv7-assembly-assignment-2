@@ -13,8 +13,8 @@ main:
   @ Configure systick
   bl init_systick
 
-  @ @ Configure microphone
-  @ bl init_microphone
+  @ Configure microphone
+  bl init_microphone
 
   bl audio_init
   b loop_start
