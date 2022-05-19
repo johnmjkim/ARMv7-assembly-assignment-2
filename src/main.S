@@ -13,11 +13,15 @@ main:
   @ Configure systick
   bl init_systick
 
+  @ Configure random
+  bl init_random
+
   @ Configure microphone
   bl init_microphone
 
   bl audio_init
   b loop_start
+  
 .size main, .-main
 
 loop_start:
