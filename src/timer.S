@@ -130,6 +130,14 @@ target_sound_amplitude_update_exit:
   mov r1, 0
   str r1, [r0]
 
+  ldr r0, =button_triggered
+  mov r1, 0
+  str r1, [r0]
+
+  ldr r0, =my_sound_amplitude
+  mov r1, 0
+  str r1, [r0]
+
 target_sound_amplitude_update_end:
   ldr r0, =target_sound_amplitude_update_period
   ldr r1, [r0, 4]

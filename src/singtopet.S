@@ -29,6 +29,7 @@ display_sing_to_pet:
   push {lr}
   bl display_under_status_bar
   pop {lr}
+
   pop {r0-r1}
   bx lr
 .size display_sing_to_pet, .-display_sing_to_pet

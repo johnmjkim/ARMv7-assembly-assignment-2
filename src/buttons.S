@@ -238,6 +238,13 @@ button_A_clicked_state4:
   bl decrease_my_sing
   pop {lr}
 
+  ldr r0, =my_sound_amplitude
+  ldr r1, [r0]
+  add r1, #7
+
+  ldr r0, =button_triggered
+  str r1, [r0]
+
   b button_A_clicked_end
 
 @ button A clicked at state 5 : menu display
@@ -334,6 +341,13 @@ button_B_clicked_state4:
   push {lr}
   bl increase_my_sing
   pop {lr}
+
+  ldr r0, =my_sound_amplitude
+  ldr r1, [r0]
+  add r1, #7
+
+  ldr r0, =button_triggered
+  str r1, [r0]
 
   b button_B_clicked_end
 

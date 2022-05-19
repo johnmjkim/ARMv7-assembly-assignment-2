@@ -95,7 +95,10 @@ loop_end_set_up:
   ldr r5, [r0, 8]
 
   ldr r0, =button_triggered
-  ldr r3, [r0, 4]
+  ldr r3, [r0]
+  cmp r3, 7
+  IT LT
+  ldrlt r3, [r0, 4]
   str r3, [r0]
 
   mov r1, 0
@@ -196,7 +199,13 @@ button_triggered:
 @ 4 (button B : scroll)
 @ 5 (button B : select right at telepahty game)
 @ 6 (button B : feed pet)
-.word 0, 0, 6
+@ 7 (singing mode 0 : sing to pet amplitude level 0)
+@ 8 (singing mode 1 : sing to pet amplitude level 1)
+@ 9 (singing mode 2 : sing to pet amplitude level 2)
+@ 10 (singing mode 3 : sing to pet amplitude level 3)
+@ 11 (singing mode 4 : sing to pet amplitude level 4)
+@ 12 (singing mode 5 : sing to pet amplitude level 5)
+.word 0, 0, 12
 button_trigger_sound:
 @ none
 .word 0, 0, 0, 0, 0
@@ -212,6 +221,18 @@ button_trigger_sound:
 .word 800, 0, 0, 800, 800
 @ button B : feed pet
 .word 800, 0, 600, 0, 600
+@ singing mode 0 : sing to pet amplitude level 0
+.word 0, 0, 0, 0, 0
+@ singing mode 1 : sing to pet amplitude level 1
+.word 500, 0, 600, 0, 700
+@ singing mode 2 : sing to pet amplitude level 2
+.word 800, 500, 600, 400, 700
+@ singing mode 3 : sing to pet amplitude level 3
+.word 1000, 900, 1100, 800, 1000
+@ singing mode 4 : sing to pet amplitude level 4
+.word 1200, 900, 1100, 1000, 1200
+@ singing mode 5 : sing to pet amplitude level 5
+.word 1400, 1200, 1300, 1000, 1100
 
 button_sound_count:
 .word 0, 0, 300
