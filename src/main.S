@@ -17,7 +17,6 @@ main:
   @ bl init_microphone
 
   bl audio_init
-  
   b loop_start
 .size main, .-main
 
@@ -30,7 +29,64 @@ loop_start:
   beq loop_end_set_up
   b loop_set_up
 
+loop_set_up:
+  @ get starting index of beat
+  mov r4, 4
+  ldr r0, =button_sound_index
+  ldr r6, [r0, 8]
+  add r6, 1
+  mul r5, r3, r4
+  mul r5, r5, r6
+
+  @ add sound index offset
+  ldr r7, [r0]
+  mul r6, r7, r4
+  add r5, r6
+
+  @ beat starter r1 and adder r2
+  mov r1, 0
+  ldr r0, =button_trigger_sound
+  ldr r2, [r0, r5]
+
+  @ one beat count
+  mov r4, 0
+  ldr r0, =button_sound_count
+  ldr r5, [r0, 8]
+loop:
+  cmp r4, r5
+  IT EQ
+  beq loop_next_set_up
+
+  push {lr}
+  bl display
+  pop {lr}
+
+  add r1, r2
+  mov r0, r1
+  push {r1-r3}
+  bl audio_play_sample
+  pop {r1-r3}
+
+  add r4, 1
+
+  b loop
+
+loop_next_set_up:
+  ldr r0, =button_sound_index
+  ldr r4, [r0]
+  ldr r5, [r0, 8]
+  cmp r4, r5
+  IT EQ
+  beq loop_end_set_up
+  add r4, 1
+  str r4, [r0]
+  b loop_set_up
+
 loop_end_set_up:
+  ldr r0, =button_sound_index
+  ldr r4, [r0, 4]
+  str r4, [r0]
+
   ldr r0, =button_sound_count
   ldr r5, [r0, 8]
 
@@ -60,82 +116,6 @@ loop_end:
   add r4, 1
 
   b loop_end
-
-loop_set_up:
-  @ get index of beat
-  mov r4, 4
-  ldr r0, =button_sound_index
-  ldr r6, [r0, 8]
-  mul r5, r3, r4
-  mul r5, r5, r6
-
-  @ beat starter r1 and adder r2
-  mov r1, 0
-  ldr r0, =button_trigger_sound
-  ldr r2, [r0, r5]
-
-  @ one beat count
-  mov r4, 0
-  ldr r0, =button_sound_count
-  ldr r5, [r0, 8]
-loop:
-  cmp r4, r5
-  IT EQ
-  beq loop_1_set_up
-
-  push {lr}
-  bl display
-  pop {lr}
-
-  add r1, r2
-  mov r0, r1
-  push {r1-r3}
-  bl audio_play_sample
-  pop {r1-r3}
-
-  add r4, 1
-
-  b loop
-
-loop_1_set_up:
-  @ get index of beat
-  mov r4, 4
-  ldr r0, =button_sound_index
-  ldr r6, [r0, 8]
-  mul r5, r3, r4
-  mul r5, r5, r6
-
-  @ index of beat added
-  add r5, 4
-
-  @ beat starter r1 and adder r2
-  mov r1, 0
-  ldr r0, =button_trigger_sound
-  ldr r2, [r0, r5]
-
-  @ one beat count
-  mov r4, 0
-  ldr r0, =button_sound_count
-  ldr r5, [r0, 8]
-
-loop_1:
-  cmp r4, r5
-  IT EQ
-  beq loop_end_set_up
-
-  push {lr}
-  bl display
-  pop {lr}
-
-  add r1, r2
-  mov r0, r1
-  push {r1-r3}
-  bl audio_play_sample
-  pop {r1-r3}
-
-  add r4, 1
-
-  b loop_1
 
 @ loop_start:
 @   nop
@@ -337,6 +317,6 @@ button_trigger_sound:
 @ button B
 .word 600, 500, 800
 button_sound_count:
-.word 0, 0, 500
+.word 0, 0, 200
 button_sound_index:
-.word 0, 0, 3
+.word 0, 0, 2
