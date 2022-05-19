@@ -28,24 +28,19 @@ loop_start:
   cmp r3, 0
   IT EQ
   beq loop_end_set_up
-  cmp r3, 1
-  IT EQ
-  beq loop_A_set_up
-  cmp r3, 2
-  IT EQ
-  beq loop_B_set_up
-  
+  b loop_set_up
 
 loop_end_set_up:
-  mov r1, 0
-  mov r2, 0
-  mov r4, 0
   ldr r0, =button_sound_count
   ldr r5, [r0, 8]
 
   ldr r0, =button_triggered
   ldr r3, [r0, 4]
   str r3, [r0]
+
+  mov r1, 0
+  mov r2, 0
+  mov r4, 0
 
 loop_end:
   cmp r4, r5
@@ -66,17 +61,27 @@ loop_end:
 
   b loop_end
 
-loop_A_set_up:
+loop_set_up:
+  @ get index of beat
+  mov r4, 4
+  ldr r0, =button_sound_index
+  ldr r6, [r0, 8]
+  mul r5, r3, r4
+  mul r5, r5, r6
+
+  @ beat starter r1 and adder r2
   mov r1, 0
-  ldr r0, =button_A_trigger_sound
-  ldr r2, [r0]
+  ldr r0, =button_trigger_sound
+  ldr r2, [r0, r5]
+
+  @ one beat count
   mov r4, 0
   ldr r0, =button_sound_count
   ldr r5, [r0, 8]
-loop_A:
+loop:
   cmp r4, r5
   IT EQ
-  beq loop_A_1_set_up
+  beq loop_1_set_up
 
   push {lr}
   bl display
@@ -90,68 +95,30 @@ loop_A:
 
   add r4, 1
 
-  b loop_A
+  b loop
 
-loop_A_1_set_up:
+loop_1_set_up:
+  @ get index of beat
+  mov r4, 4
+  ldr r0, =button_sound_index
+  ldr r6, [r0, 8]
+  mul r5, r3, r4
+  mul r5, r5, r6
+
+  @ index of beat added
+  add r5, 4
+
+  @ beat starter r1 and adder r2
   mov r1, 0
-  ldr r0, =button_A_trigger_sound
-  ldr r2, [r0, 4]
+  ldr r0, =button_trigger_sound
+  ldr r2, [r0, r5]
+
+  @ one beat count
   mov r4, 0
   ldr r0, =button_sound_count
   ldr r5, [r0, 8]
-loop_A_1:
-  cmp r4, r5
-  IT EQ
-  beq loop_end_set_up
 
-  push {lr}
-  bl display
-  pop {lr}
-
-  add r1, r2
-  mov r0, r1
-  push {r1-r3}
-  bl audio_play_sample
-  pop {r1-r3}
-
-  add r4, 1
-
-  b loop_A_1
-
-loop_B_set_up:
-  mov r1, 0
-  ldr r0, =button_B_trigger_sound
-  ldr r2, [r0]
-  mov r4, 0
-  ldr r0, =button_sound_count
-  ldr r5, [r0, 8]
-loop_B:
-  cmp r4, r5
-  IT EQ
-  beq loop_B_1_set_up
-
-  push {lr}
-  bl display
-  pop {lr}
-
-  add r1, r2
-  mov r0, r1
-  push {r1-r3}
-  bl audio_play_sample
-  pop {r1-r3}
-
-  add r4, 1
-
-  b loop_B
-
-loop_B_1_set_up:
-  mov r1, 0
-  ldr r0, =button_B_trigger_sound
-  ldr r2, [r0, 4]
-  mov r4, 0
-  ldr r0, =button_sound_count
-  ldr r5, [r0, 8]
-loop_B_1:
+loop_1:
   cmp r4, r5
   IT EQ
   beq loop_end_set_up
@@ -168,7 +135,123 @@ loop_B_1:
 
   add r4, 1
 
-  b loop_B_1
+  b loop_1
+
+@ loop_start:
+@   nop
+@   ldr r0, =button_triggered
+@   ldr r3, [r0]
+@   cmp r3, 0
+@   IT EQ
+@   beq loop_end_set_up
+@   b loop_set_up
+
+@ loop_end_set_up:
+@   ldr r0, =button_sound_count
+@   ldr r5, [r0, 8]
+
+@   ldr r0, =button_triggered
+@   ldr r3, [r0, 4]
+@   str r3, [r0]
+
+@   mov r1, 0
+@   mov r2, 0
+@   mov r4, 0
+
+@ loop_end:
+@   cmp r4, r5
+@   IT EQ
+@   beq loop_start
+
+@   push {lr}
+@   bl display
+@   pop {lr}
+
+@   add r1, r2
+@   mov r0, r1
+@   push {r1-r3}
+@   bl audio_play_sample
+@   pop {r1-r3}
+
+@   add r4, 1
+
+@   b loop_end
+
+@ loop_set_up:
+@   @ get index of beat
+@   mov r4, 4
+@   ldr r0, =button_sound_index
+@   ldr r6, [r0, 8]
+@   mul r5, r3, r4
+@   mul r5, r5, r6
+
+@   @ beat starter r1 and adder r2
+@   mov r1, 0
+@   ldr r0, =button_trigger_sound
+@   ldr r2, [r0, r5]
+
+@   @ one beat count
+@   mov r4, 0
+@   ldr r0, =button_sound_count
+@   ldr r5, [r0, 8]
+@ loop:
+@   cmp r4, r5
+@   IT EQ
+@   beq loop_1_set_up
+
+@   push {lr}
+@   bl display
+@   pop {lr}
+
+@   add r1, r2
+@   mov r0, r1
+@   push {r1-r3}
+@   bl audio_play_sample
+@   pop {r1-r3}
+
+@   add r4, 1
+
+@   b loop
+
+@ loop_1_set_up:
+@   @ get index of beat
+@   mov r4, 4
+@   ldr r0, =button_sound_index
+@   ldr r6, [r0, 8]
+@   mul r5, r3, r4
+@   mul r5, r5, r6
+
+@   @ index of beat added
+@   add r5, 4
+
+@   @ beat starter r1 and adder r2
+@   mov r1, 0
+@   ldr r0, =button_trigger_sound
+@   ldr r2, [r0, r5]
+
+@   @ one beat count
+@   mov r4, 0
+@   ldr r0, =button_sound_count
+@   ldr r5, [r0, 8]
+
+@ loop_1:
+@   cmp r4, r5
+@   IT EQ
+@   beq loop_end_set_up
+
+@   push {lr}
+@   bl display
+@   pop {lr}
+
+@   add r1, r2
+@   mov r0, r1
+@   push {r1-r3}
+@   bl audio_play_sample
+@   pop {r1-r3}
+
+@   add r4, 1
+
+@   b loop_1
 
 .type display, %function
 @ current_state:
@@ -246,7 +329,14 @@ button_A_trigger_sound:
 button_B_trigger_sound:
 @ button B
 .word 600, 500, 800
+button_trigger_sound:
+@ none
+.word 0, 0, 0
+@ button A
+.word 500, 800, 600
+@ button B
+.word 600, 500, 800
 button_sound_count:
 .word 0, 0, 500
-button_sound_laps:
-.word 0, 0, 2
+button_sound_index:
+.word 0, 0, 3
