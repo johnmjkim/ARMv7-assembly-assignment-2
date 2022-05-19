@@ -230,29 +230,13 @@ button_A_clicked_state3:
   b button_A_clicked_end
 
 @ button A clicked at state 4 : sing to pet
-@ go back to menu display
+@ lower amplitude of singing
 button_A_clicked_state4:
-  ldr r0, =button_triggered
-  mov r1, 2
-  str r1, [r0]
 
-  @ give delay
-  ldr r0, =0x100
+  mov r0, 1
   push {lr}
-  bl delay
+  bl decrease_my_sing
   pop {lr}
-
-  ldr r0, =current_state
-  ldr r1, [r0]
-  ldr r2, [r0, 8]
-  str r2, [r0]
-  
-  ldr r0, =current_menu_display
-  str r1, [r0]
-
-  ldr r0, =correct_sing
-  mov r1, 0
-  str r1, [r0]
 
   b button_A_clicked_end
 
@@ -298,6 +282,9 @@ button_B_clicked:
   cmp r1, 3
   IT EQ
   beq button_B_clicked_state3
+  cmp r1, 4
+  IT EQ
+  beq button_B_clicked_state4
   cmp r1, 5
   IT EQ
   beq button_B_clicked_state5
@@ -337,6 +324,17 @@ button_B_clicked_state3:
   push {lr}
   bl feed_pet
   pop {lr}
+  b button_B_clicked_end
+
+@ button B clicked at state 4 : sing to pet
+@ higher amplitude of singing
+button_B_clicked_state4:
+
+  mov r0, 1
+  push {lr}
+  bl increase_my_sing
+  pop {lr}
+
   b button_B_clicked_end
 
 @ button B clicked at state 5 : menu display

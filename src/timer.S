@@ -98,11 +98,11 @@ pet_status_update:
 .type target_sound_amplitude_update, %function
 target_sound_amplitude_update:
   push {lr}
-  bl change_target_sound_amplitude
+  bl evaluate_sound_amplitude
   pop {lr}
 
   push {lr}
-  bl evaluate_sound_amplitude
+  bl change_target_sound_amplitude
   pop {lr}
 
   push {r0-r2}
