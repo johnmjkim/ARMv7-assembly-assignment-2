@@ -195,21 +195,21 @@ button_triggered:
 .word 0, 0, 6
 button_trigger_sound:
 @ none
-.word 0, 0, 0
+.word 0, 0, 0, 0, 0
 @ button A : select option
-.word 500, 800, 500, 1000, 500
+.word 600, 0, 800, 0, 800
 @ button A : select exit
-.word 1500, 800, 1500, 1000, 1500
+.word 800, 0, 800, 0, 600
 @ button A : select left at telepahty game
-.word 500, 0, 500, 0, 0
+.word 500, 0, 0, 500, 500
 @ button B : scroll
-.word 800, 500, 1000, 500, 800
+.word 400, 0, 800, 0, 400
 @ button B : select right at telepahty game
-.word 1500, 0, 1500, 0, 0
+.word 800, 0, 0, 800, 800
 @ button B : feed pet
-.word 800, 1500, 1000, 1500, 800
+.word 800, 0, 600, 0, 600
 
 button_sound_count:
-.word 0, 0, 200
+.word 0, 0, 300
 button_sound_index:
 .word 0, 0, 4

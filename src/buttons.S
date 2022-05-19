@@ -156,6 +156,12 @@ button_A_clicked_state0:
   mov r1, 2
   str r1, [r0]
 
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
+
   ldr r0, =current_state
   ldr r1, [r0, 8]
   str r1, [r0]
@@ -167,6 +173,12 @@ button_A_clicked_state1:
   ldr r0, =button_triggered
   mov r1, 2
   str r1, [r0]
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
 
   ldr r0, =current_state
   ldr r1, [r0]
@@ -184,6 +196,12 @@ button_A_clicked_state2:
   mov r1, 3
   str r1, [r0]
 
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
+
   push {lr}
   bl pet_position_left
   pop {lr}
@@ -195,6 +213,12 @@ button_A_clicked_state3:
   ldr r0, =button_triggered
   mov r1, 2
   str r1, [r0]
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
 
   ldr r0, =current_state
   ldr r1, [r0]
@@ -211,6 +235,12 @@ button_A_clicked_state4:
   ldr r0, =button_triggered
   mov r1, 2
   str r1, [r0]
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
 
   ldr r0, =current_state
   ldr r1, [r0]
@@ -232,6 +262,12 @@ button_A_clicked_state5:
   ldr r0, =button_triggered
   mov r1, 1
   str r1, [r0]
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
 
   ldr r0, =current_menu_display
   ldr r1, [r0]
@@ -274,6 +310,12 @@ button_B_clicked_state2:
   mov r1, 5
   str r1, [r0]
 
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
+
   push {lr}
   bl pet_position_right
   pop {lr}
@@ -286,6 +328,12 @@ button_B_clicked_state3:
   mov r1, 6
   str r1, [r0]
 
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
+
   push {lr}
   bl feed_pet
   pop {lr}
@@ -297,6 +345,12 @@ button_B_clicked_state5:
   ldr r0, =button_triggered
   mov r1, 4
   str r1, [r0]
+
+  @ give delay
+  ldr r0, =0x100
+  push {lr}
+  bl delay
+  pop {lr}
 
   push {lr}
   bl display_scroll
