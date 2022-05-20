@@ -74,7 +74,7 @@ Basically, the function <code>display</code> is executed in each loop of the <co
 
 ## Button sound and synthetic music
 
-The <code>audio.S</code> library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function <code>audio_play_sample</code> to make audio and add constant number to mute. Data structure of <code>button_trigger_sound</code> is used to control frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
+The <code>audio.S</code> library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function <code>audio_play_sample</code> to make audio and add a constant number to mute. Data structure of <code>button_trigger_sound</code> is used to control frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
 
 ## Random Telepathy, Random Target Music Mode
 
@@ -84,10 +84,12 @@ The random number generator (RNG) module is implemented. The function <code>gene
 
 ## Reasons for Design
 
+Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image is required because it makes it easier to change the state of the game and pet by only calling specific functions. 
 
+Peripherals like timer and buttons were implemented to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status, which is required to set constant time regardless of the code complexity. 
+
+The button command is sufficiently intuitive to users and easy to catch up what to do. For simplicity, button A is used to select/exit/left and button B is used to scroll/action/right. The sound of the command is also implemented to note which command is being executed to the user.
 
 ## Limitation
-
-### Sing to Pet Using Microphone
 
 The microphone could have been implemented to improve my design of ‘sing to pet’ part instead of controlling music mode by buttons. The microphone would record the amplitude of the voice of the user. The user would gain the score if the user makes a similar level of the target sound.
