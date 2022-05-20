@@ -28,7 +28,7 @@ Pet’s stress increases +1 per 5 seconds up to 5. HP decreases -1 per 5 seconds
 
 ## Telepathy Game
 
-The user needs to estimate where the pet wishes to go (left or right) in the telepathy game. User gets +1 food stock and pet decreases -1 stress per correct score.
+The user needs to estimate where the pet wishes to go (left or right) in the telepathy game. User gets +1 food stock and the pet decreases -1 stress per correct score.
 
 ![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
 
@@ -40,13 +40,13 @@ Users can feed the pet to increase HP if food stock is available.
 
 ## Sing to Pet
 
-User needs to control your singing mode to the target singing mode by using button A and B. Game ends until user get all five scores. Pet stress decreases to 0 after the game.
+User needs to control your singing mode to the target singing mode by using button A and B. Game ends until the user gets all five scores. Pet stress decreases to 0 after the game.
 
 ![Figure 6. Sing to Pet](assets/sing_to_pet_image.png)
 
 ## Exit
 
-Go back to see pet.
+Go back to see a pet.
 
 ![Figure 7. Exit](assets/exit_image.png)
 
@@ -70,13 +70,13 @@ Basically, the function <code>display</code> is executed in each loop of the <co
 
 ## Updating status periodically
 
-<code>SysTick_Handler</code> is used to periodically interrupt and change the data structure of the pet status, food stock. Because the handler can count maximum of 50 ms (320,000 cycles), data structure is used to repeat 20 times of 50ms cycle to make 1 second. Update status period is also used to trigger status update by 5 seconds.
+<code>SysTick_Handler</code> is used to periodically interrupt and change the data structure of the pet status, food stock. Because the handler can count a maximum of 50 ms (320,000 cycles), data structure is used to repeat 20 times of 50ms cycle to make 1 second. Update status period is also used to trigger status update by 5 seconds.
 
 ## Button sound and synthetic music
 
 The <code>audio.S</code> library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function <code>audio_play_sample</code> to make audio and add constant number to mute. Data structure of <code>button_trigger_sound</code> is used to control frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
 
-## Random telepathy, target music mode
+## Random Telepathy, Random Target Music Mode
 
 The random number generator (RNG) module is implemented. The function <code>generate_random</code> gets a parameter of inclusive upper bound to calculate a modulus of a generated random number. Once the random module is configured and started, the function can read the random number from the address <code>VALUE</code> of the RNG module.
 
@@ -87,3 +87,7 @@ The random number generator (RNG) module is implemented. The function <code>gene
 
 
 ## Limitation
+
+### Sing to Pet Using Microphone
+
+The microphone could have been implemented to improve my design of ‘sing to pet’ part instead of controlling music mode by buttons. The microphone would record the amplitude of the voice of the user. The user would gain the score if the user makes a similar level of the target sound.
