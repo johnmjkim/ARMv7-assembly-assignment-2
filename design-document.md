@@ -8,47 +8,65 @@ email: johnmjkim1216@gmail.com
 
 My pet is called “Faceman”! It shows facial expressions happy, neutral or sad.  Players can interact with this pet with several options like telepathy game, feeding pet and singing to pet.
 
-## Menu selection
+## Menu Selection
 
 The user can always press button A to exit to see menu options (Exception : telepathy game or singing to a pet). Buttons can be used to scroll and select options.
 
-## See pet
+![Figure 1. Menu Selection](assets/menu_selection_image.png)
+
+## See Pet
 
 It shows facial expression based on its stress and health point (HP). 
 
-## Pet status
+![Figure 2. See Pet](assets/see_pet_image.png)
+
+## Pet Status
 
 Pet’s stress increases +1 per 5 seconds up to 5. HP decreases -1 per 5 seconds if stress is 5.
 
-## Telepathy game
+![Figure 3. Pet Status](assets/pet_status_image.png)
 
-The user needs to estimate where the pet wishes to go (left or right) in the telepathy game.
+## Telepathy Game
 
-## Feed pet
+The user needs to estimate where the pet wishes to go (left or right) in the telepathy game. User gets +1 food stock and pet decreases -1 stress per correct score.
+
+![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
+
+## Feed Pet
 
 Users can feed the pet to increase HP if food stock is available.
 
-## Sing to pet
+![Figure 5. Feed Pet](assets/feed_pet_image.png)
 
-User needs to control your singing mode to the target singing mode by using button A and B.
+## Sing to Pet
+
+User needs to control your singing mode to the target singing mode by using button A and B. Game ends until user get all five scores. Pet stress decreases to 0 after the game.
+
+![Figure 6. Sing to Pet](assets/sing_to_pet_image.png)
 
 ## Exit
 
-Go back to see pet
+Go back to see pet.
+
+![Figure 7. Exit](assets/exit_image.png)
 
 # How : Interaction with Tamagochi 
 
-## Multiple states and actions
+## Multiple States and Actions
 
 Various libraries with their own special purposes were created to organize which functions and data structure are used for each state.
 
-## Selecting options in menu
+## Selecting Options in Menu
 
-Pre-defined displays of each option are stored with data structure. Users can navigate these options through buttons A and B which are configured with GPIOTE in <code>button.S</code>. The block diagram of states is shown in figure X. 
+Pre-defined displays of each option are stored with data structure. Users can navigate these options through buttons A and B which are configured with GPIOTE in <code>button.S</code>. The block diagram of states is shown in figure 8.
 
-## Displaying facial expression, icon and status bars
+![Figure 8. Block Diagram](assets/block_diagram_image.png)
+
+## Displaying Facial Expression, Icon and Status bars
 
 Basically, the function <code>display</code> is executed in each loop of the <code>main.S</code>. In each loop, function ‘display’ reads the data of current state in data structure and it would change the pre-defined LED display. The <code>display</code> function also calls necessary functions from custom built libraries.
+
+![Figure 9. Displaying](assets/displaying_image.png)
 
 ## Updating status periodically
 
@@ -65,5 +83,7 @@ The random number generator (RNG) module is implemented. The function <code>gene
 # Why : Reasons for Design and Limitations
 
 ## Reasons for Design
+
+
 
 ## Limitation
