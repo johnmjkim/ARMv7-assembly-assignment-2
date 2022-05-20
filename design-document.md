@@ -28,7 +28,7 @@ Shows pet's HP and stress.
 
 ## Telepathy Game
 
-The user estimates where the pet wishes to go. User gets +1 food stock and the pet decreases -1 stress per correct score.
+The user estimates where the pet wishes to go.
 
 ![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
 
