@@ -6,7 +6,7 @@ email: johnmjkim1216@gmail.com
 
 # What : Faceman
 
-My pet is called “Faceman”! It shows facial expressions happy, neutral or sad.  Players can interact with this pet with several options like telepathy game, feeding pet and singing to pet.
+My pet is called “Faceman”! It shows facial expressions and players can interact with this pet with several options.
 
 ## Menu Selection
 
@@ -84,7 +84,7 @@ The random number generator (RNG) module is implemented. The function <code>gene
 
 ## Reasons for Design
 
-Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image is required because it makes it easier to change the state of the game and pet by only calling specific functions. 
+Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image is required because it makes it easier to change the state of the game and pet by only calling specific functions.
 
 Peripherals like timer and buttons were implemented to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status, which is required to set constant time regardless of the code complexity. 
 
