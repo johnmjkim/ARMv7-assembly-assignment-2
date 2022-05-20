@@ -10,25 +10,25 @@ My pet is called “Faceman”! It shows facial expressions and players can inte
 
 ## Menu Selection
 
-The user can always press button A to exit to see menu options (Exception : telepathy game or singing to a pet). Buttons can be used to scroll and select options.
+Displays 'See pet' option first. The user can use buttons scroll and select options.
 
 ![Figure 1. Menu Selection](assets/menu_selection_image.png)
 
 ## See Pet
 
-It shows facial expression based on its stress and health point (HP). 
+Shows facial expression based on pet's HP and stress.
 
 ![Figure 2. See Pet](assets/see_pet_image.png)
 
 ## Pet Status
 
-Pet’s stress increases +1 per 5 seconds up to 5. HP decreases -1 per 5 seconds if stress is 5.
+Shows pet's HP and stress.
 
 ![Figure 3. Pet Status](assets/pet_status_image.png)
 
 ## Telepathy Game
 
-The user needs to estimate where the pet wishes to go (left or right) in the telepathy game. User gets +1 food stock and the pet decreases -1 stress per correct score.
+The user estimates where the pet wishes to go. User gets +1 food stock and the pet decreases -1 stress per correct score.
 
 ![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
 
