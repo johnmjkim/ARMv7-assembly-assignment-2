@@ -6,12 +6,30 @@
 
 .type feed_pet, %function
 feed_pet:
-  push {r0, lr}
+  push {r0-r1, lr}
+
+  ldr r0, =food_stock
+  ldr r1, [r0]
+  cmp r1, 0
+  IT GT
+  bgt feed_pet_if_food_available
+  b feed_pet_end
+
+feed_pet_if_food_available:
+
   mov r0, 1
-  bl decrease_food_stock
-  mov r0, 1
+  push {lr}
   bl increase_HP
-  pop {r0, lr}
+  pop {lr}
+
+  mov r0, 1
+  push {lr}
+  bl decrease_food_stock
+  pop {lr}
+
+feed_pet_end:
+
+  pop {r0-r1, lr}
   bx lr
 .size feed_pet, .-feed_pet
 
