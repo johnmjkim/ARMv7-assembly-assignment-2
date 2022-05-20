@@ -224,15 +224,15 @@ button_trigger_sound:
 @ singing mode 0 : sing to pet amplitude level 0
 .word 0, 0, 0, 0, 0
 @ singing mode 1 : sing to pet amplitude level 1
-.word 500, 0, 600, 0, 700
+.word 1400, 0, 1300, 0, 1100
 @ singing mode 2 : sing to pet amplitude level 2
-.word 800, 500, 600, 400, 700
+.word 1200, 0, 1100, 0, 1200
 @ singing mode 3 : sing to pet amplitude level 3
-.word 1000, 900, 1100, 800, 1000
+.word 1000, 0, 1100, 0, 1000
 @ singing mode 4 : sing to pet amplitude level 4
-.word 1200, 900, 1100, 1000, 1200
+.word 800, 0, 600, 0, 700
 @ singing mode 5 : sing to pet amplitude level 5
-.word 1400, 1200, 1300, 1000, 1100
+.word 500, 0, 600, 0, 700
 
 button_sound_count:
 .word 0, 0, 300
