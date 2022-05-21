@@ -40,7 +40,7 @@ User feeds the pet to increase HP if food is available.
 
 ## <img src="assets/sing_to_pet_icon_image.png" width="60" height="60"> Sing to Pet 
 
-User controls singing mode to the target singing mode. Game ends until the user gets a maximum score. Pet stress decreases to 0 after the game.
+User controls the singing mode to the target singing mode. Game ends until the user gets a maximum score. Pet stress decreases to 0 after the game.
 
 ![Figure 6. Sing to Pet](assets/sing_to_pet_image.png)
 
@@ -72,7 +72,7 @@ Basically, the function `display` is executed in each loop of the `main.S`. In e
 
 ## Button sound and synthetic music
 
-The `audio.S` library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function `audio_play_sample` to make audio and add a constant number to mute. Data structure of `button_trigger_sound` is used to control frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
+The `audio.S` library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function `audio_play_sample` to make audio and adds a constant number to mute. Data structure of `button_trigger_sound` is used to control the frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
 
 ## Random Telepathy, Random Target Music Mode
 
@@ -86,12 +86,12 @@ Display of the image is done in the main loop because multiple LEDs should be tu
 
 `timer.S` and `buttons.S` implements peripherals to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status. The period would not be consistent without it.
 
-The button command is sufficiently intuitive to users and easy to catch up what to do. Each button tirggers different sounds to notify user which command has been executed. In specific state, unused button is deactivated for simplicity.
+The button command is sufficiently intuitive to users and easy to catch up what to do. Each button triggers different sounds to notify the user which command has been executed. In a specific state, an unused button is deactivated for simplicity.
 
 ## Limitation
 
-`Sing to Pet` can be improved by using microphone and two independemnt SysTick handlers.
+`Sing to Pet` can be improved by using a microphone and two independent SysTick handlers.
 
-Instead of buttons, the microphone would record the sound level of the user. The user would gain the score if sound level is identical the target sound.
+Instead of buttons, the microphone would record the sound level of the user. The user would gain the score if the sound level is identical to the target sound.
 
 Another independent SysTick handler could have been implemented to evaluate the sound level of the user at the start of the game.
