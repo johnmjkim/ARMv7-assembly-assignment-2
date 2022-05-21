@@ -68,13 +68,13 @@ Basically, the function `display` is executed in each loop of the `main.S`. In e
 
 `SysTick_Handler` periodically interrupts and changes the data structure of the pet status, food stock, etc. Because the handler can count up to 50ms, data structure is used to repeat 20 times of 50ms cycle to make 1 second (basic unit of time).
 
-<img src="assets/periodic_updating_image.png" width="400" height="200">
+<img src="assets/periodic_updating_image.png" width="800" height="200">
 
 ## Button Sound and Synthetic Music
 
 The `audio.S` library is implemented to create audio from speakers. The main loop inputs a certain number to the function `audio_play_sample` to make audio. The audio makes sound if the number is increasing and mutes of the number are constant. Data structure of `button_trigger_sound` is used to control the sound by making a few seconds of sounds or periodically repeating music. 
 
-<img src="assets/sound_and_music_image.png" width="400" height="200">
+<img src="assets/sound_and_music_image.png" width="800" height="200">
 
 ## Random Telepathy, Random Target Music Mode
 
