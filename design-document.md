@@ -12,7 +12,7 @@ My pet is called “Faceman”! It shows facial expressions and players can inte
 
 Displays `See Pet` option first. The user can use buttons to scroll and select options.
 
-<img src="assets/menu_selection_image.png" width="800" height="200">
+<img src="assets/menu_selection_image.png" width="800" height="400">
 
 ## <img src="assets/see_pet_icon_image.png" width="60" height="60"> See Pet 
 
