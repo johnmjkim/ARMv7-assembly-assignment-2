@@ -19,8 +19,8 @@ uid: u7269158
 
 
 # Assets
-*add as many "url+licence+comment" entries as necessary separated by *** (or remove it altogether if you haven't used any external assets)*
-***
+*None
+
 ### comment: 
 description of usage
 ### url: 
