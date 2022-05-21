@@ -28,7 +28,7 @@ Shows pet's HP and stress.
 
 ## <img src="assets/telepathy_game_icon_image.png" width="60" height="60"> Telepathy Game 
 
-User estimates where the pet wishes to go.
+User estimates where the pet wishes to go. +1 score if user and pet has a same mind!
 
 ![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
 
