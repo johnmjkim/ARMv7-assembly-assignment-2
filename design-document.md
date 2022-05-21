@@ -10,7 +10,7 @@ My pet is called “Faceman”! It shows facial expressions and players can inte
 
 ## Menu Selection
 
-Displays 'See pet' option first. The user can use buttons scroll and select options.
+Displays 'See pet' option first. The user can use buttons to scroll and select options.
 
 ![Figure 1. Menu Selection](assets/menu_selection_image.png)
 
@@ -44,11 +44,11 @@ User needs to control your singing mode to the target singing mode by using butt
 
 ![Figure 6. Sing to Pet](assets/sing_to_pet_image.png)
 
-## Exit
+## Exit ![](assets/exit_icon_image.png)
 
 Go back to see a pet.
 
-![Figure 7. Exit](assets/exit_image.png)
+
 
 # How : Interaction with Tamagochi 
 
