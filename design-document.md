@@ -98,4 +98,4 @@ Instead of buttons, the microphone would record the sound level of the user. The
 
 Another independent SysTick handler could have been implemented to evaluate the sound level of the user at the start of the game.
 
-![Figure 10. Limitation](assets/limitation_image.png)
+<img src="assets/limitation_image.png" width="400" height="200">
