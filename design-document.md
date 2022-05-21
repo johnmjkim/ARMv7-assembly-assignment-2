@@ -82,12 +82,16 @@ The random number generator (RNG) module is implemented. The function `generate_
 
 ## Reasons for Design
 
-Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image is required because it makes it easier to change the state of the game and pet by only calling specific functions.
+Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image makes the process easier to change the game state and pet status by calling specific functions.
 
-Peripherals like timer and buttons were implemented to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status, which is required to set constant time regardless of the code complexity. 
+`timer.S` and `buttons.S` implements peripherals to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status. The period would not be consistent without it.
 
-The button command is sufficiently intuitive to users and easy to catch up what to do. For simplicity, button A is used to select/exit/left and button B is used to scroll/action/right. The sound of the command is also implemented to note which command is being executed to the user.
+The button command is sufficiently intuitive to users and easy to catch up what to do. Each button tirggers different sounds to notify user which command has been executed. In specific state, unused button is deactivated for simplicity.
 
 ## Limitation
 
-The microphone could have been implemented to improve my design of ‘sing to pet’ part instead of controlling music mode by buttons. The microphone would record the amplitude of the voice of the user. The user would gain the score if the user makes a similar level of the target sound.
+`Sing to Pet` can be improved by using microphone and two independemnt SysTick handlers.
+
+Instead of buttons, the microphone would record the sound level of the user. The user would gain the score if sound level is identical the target sound.
+
+Another independent SysTick handler could have been implemented to evaluate the sound level of the user at the start of the game.
