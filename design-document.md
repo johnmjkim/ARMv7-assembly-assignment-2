@@ -52,27 +52,31 @@ Exit to the `See Pet`.
 
 ## Multiple States and Actions
 
-Various libraries with their own special purposes were created to organize which functions and data structures are used for each state.
+Various libraries with their own purposes were created to organize which functions and data structures are used for each state.
 
 ## Selecting Options in Menu
 
-Pre-defined displays of each option are stored with data structure. Users can navigate these options through buttons A and B which are configured with GPIOTE in `button.S`. The block diagram of states is shown in figure 8.
+Pre-defined displays of each option are stored with data structure. Users can navigate these options through buttons configured with GPIOTE in `button.S`.
 
-![Figure 8. Block Diagram](assets/block_diagram_image.png)
+![Figure 7. Block Diagram](assets/block_diagram_image.png)
 
 ## Displaying Facial Expression, Icon and Status bars
 
-Basically, the function `display` is executed in each loop of the `main.S`. In each loop, `display` reads the data of current state in data structure and it would change the pre-defined LED display. The `display` also calls necessary functions from custom-built libraries.
+Basically, the function `display` is executed in each loop of the `main.S`. In each loop, `display` reads the data of current state and it would change to corresponding LED display. The `display` also calls necessary functions from custom-built libraries.
 
-![Figure 9. Displaying](assets/displaying_image.png)
+![Figure 8. Displaying](assets/displaying_image.png)
 
-## Updating status periodically
+## Updating Status Periodically
 
-`SysTick_Handler` is used to periodically interrupt and change the data structure of the pet status, food stock. Because the handler can count a maximum of 50 ms (320,000 cycles), data structure is used to repeat 20 times of 50ms cycle to make 1 second. Update status period is also used to trigger status update by 5 seconds.
+`SysTick_Handler` periodically interrupts and changes the data structure of the pet status, food stock and etc. Because the handler can count up to 50ms, data structure is used to repeat 20 times of 50ms cycle to make 1 second (basic unit of time).
 
-## Button sound and synthetic music
+![Figure 9. Periodic Updating](assets/periodic_updating_image.png)
 
-The `audio.S` library is implemented to create audio from speakers. The main loop constantly adds an increasing number to function `audio_play_sample` to make audio and adds a constant number to mute. Data structure of `button_trigger_sound` is used to control the frequency of the sound. This data structure enables the button to make for the button sound of a few seconds or periodically repeating sounds.
+## Button Sound and Synthetic Music
+
+The `audio.S` library is implemented to create audio from speakers. The main loop inputs certain number to the function `audio_play_sample` to make audio. The audio makes sound if the number is increasing and mutes of the number is constant. Data structure of `button_trigger_sound` is used to control the sound by making few seconds of sounds or periodically repeating music. 
+
+![Figure 10. Sound and Music](assets/sound_and_music_image.png)
 
 ## Random Telepathy, Random Target Music Mode
 
@@ -82,7 +86,7 @@ The random number generator (RNG) module is implemented. The function `generate_
 
 ## Reasons for Design
 
-Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined image makes the process easier to change the game state and pet status by calling specific functions.
+Display of the image is done in the main loop because multiple LEDs should be turned on simultaneously. Data structure of predefined images makes the process easier to change the game state and pet status by calling specific functions.
 
 `timer.S` and `buttons.S` implements peripherals to allow a user to interact with the pet. The SysTick handler is used to enable the periodic update of pet status. The period would not be consistent without it.
 
@@ -95,3 +99,5 @@ The button command is sufficiently intuitive to users and easy to catch up what 
 Instead of buttons, the microphone would record the sound level of the user. The user would gain the score if the sound level is identical to the target sound.
 
 Another independent SysTick handler could have been implemented to evaluate the sound level of the user at the start of the game.
+
+![Figure 11. Limitation](assets/limitation_image.png)
