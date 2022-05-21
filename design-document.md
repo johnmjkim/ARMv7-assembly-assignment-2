@@ -64,19 +64,17 @@ Pre-defined displays of each option are stored with data structure. Users can na
 
 Basically, the function `display` is executed in each loop of the `main.S`. In each loop, `display` reads the data of current state and it would change to corresponding LED display. The `display` also calls necessary functions from custom-built libraries.
 
-![Figure 8. Displaying](assets/displaying_image.png)
-
 ## Updating Status Periodically
 
-`SysTick_Handler` periodically interrupts and changes the data structure of the pet status, food stock and etc. Because the handler can count up to 50ms, data structure is used to repeat 20 times of 50ms cycle to make 1 second (basic unit of time).
+`SysTick_Handler` periodically interrupts and changes the data structure of the pet status, food stock, etc. Because the handler can count up to 50ms, data structure is used to repeat 20 times of 50ms cycle to make 1 second (basic unit of time).
 
-![Figure 9. Periodic Updating](assets/periodic_updating_image.png)
+![Figure 8. Periodic Updating](assets/periodic_updating_image.png)
 
 ## Button Sound and Synthetic Music
 
-The `audio.S` library is implemented to create audio from speakers. The main loop inputs certain number to the function `audio_play_sample` to make audio. The audio makes sound if the number is increasing and mutes of the number is constant. Data structure of `button_trigger_sound` is used to control the sound by making few seconds of sounds or periodically repeating music. 
+The `audio.S` library is implemented to create audio from speakers. The main loop inputs a certain number to the function `audio_play_sample` to make audio. The audio makes sound if the number is increasing and mutes of the number are constant. Data structure of `button_trigger_sound` is used to control the sound by making a few seconds of sounds or periodically repeating music. 
 
-![Figure 10. Sound and Music](assets/sound_and_music_image.png)
+![Figure 9. Sound and Music](assets/sound_and_music_image.png)
 
 ## Random Telepathy, Random Target Music Mode
 
@@ -100,4 +98,4 @@ Instead of buttons, the microphone would record the sound level of the user. The
 
 Another independent SysTick handler could have been implemented to evaluate the sound level of the user at the start of the game.
 
-![Figure 11. Limitation](assets/limitation_image.png)
+![Figure 10. Limitation](assets/limitation_image.png)
