@@ -14,37 +14,37 @@ Displays `See Pet` option first. The user can use buttons to scroll and select o
 
 ![Figure 1. Menu Selection](assets/menu_selection_image.png)
 
-## <img src="assets/see_pet_icon_image.png" width="50" height="50"> See Pet 
+## <img src="assets/see_pet_icon_image.png" width="60" height="60"> See Pet 
 
 Shows facial expression based on pet's HP and stress.
 
 ![Figure 2. See Pet](assets/see_pet_image.png)
 
-## <img src="assets/pet_status_icon_image.png" width="50" height="50"> Pet Status 
+## <img src="assets/pet_status_icon_image.png" width="60" height="60"> Pet Status 
 
 Shows pet's HP and stress.
 
 ![Figure 3. Pet Status](assets/pet_status_image.png)
 
-## <img src="assets/telepathy_game_icon_image.png" width="50" height="50"> Telepathy Game 
+## <img src="assets/telepathy_game_icon_image.png" width="60" height="60"> Telepathy Game 
 
 User estimates where the pet wishes to go.
 
 ![Figure 4. Telepathy Game](assets/telepathy_game_image.png)
 
-## <img src="assets/feed_pet_icon_image.png" width="50" height="50"> Feed Pet 
+## <img src="assets/feed_pet_icon_image.png" width="60" height="60"> Feed Pet 
 
 User feeds the pet to increase HP if food is available.
 
 ![Figure 5. Feed Pet](assets/feed_pet_image.png)
 
-## <img src="assets/sing_to_pet_icon_image.png" width="50" height="50"> Sing to Pet 
+## <img src="assets/sing_to_pet_icon_image.png" width="60" height="60"> Sing to Pet 
 
 User controls singing mode to the target singing mode. Game ends until the user gets a maximum score. Pet stress decreases to 0 after the game.
 
 ![Figure 6. Sing to Pet](assets/sing_to_pet_image.png)
 
-## <img src="assets/exit_icon_image.png" width="50" height="50"> Exit 
+## <img src="assets/exit_icon_image.png" width="60" height="60"> Exit 
 
 Exit to the `See Pet`.
 
